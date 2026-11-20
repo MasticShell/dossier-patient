@@ -1,6 +1,9 @@
 # Dossier patient — Urgences
 
 Application web monopage autonome (un seul fichier HTML/CSS/JS) destinée au suivi rapide des dossiers patients en médecine d'urgence, compatible PC, téléphone et tablette. L'interface applique les spécifications ergonomiques et design Material Design 3 et fonctionne intégralement hors ligne, sans base de données externe ni installation.
+Elle permet, à mon humble avis, de pallier aux logiciels patients médiocres des hôpitaux, et d'uniquement copier-coller les données en fin de première vue dans le logiciel hospitalier.
+Notre hopital a un logiciel qui parfois perd simplement les données que l'on est en train de taper, ou après 5min d'inactivité se déconnecte avant qu'on aie pu enregistrer.
+La petite perte de temps à rentrer l'identité patient vaut à mes yeux la tranquillité d'esprit que procure le fait de ne pas perdre l'avancement, et d'avoir une interface plus moderne sans qu'elle ne soit trop lourde.
 
 ## Avertissement
 
