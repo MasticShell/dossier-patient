@@ -1,0 +1,4210 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#eef3fc">
+<title>Dossier patient - Urgences</title>
+<style>
+/* ===== TOKENS MATERIAL DESIGN 3 : MODE CLAIR ===== */
+:root, [data-theme="light"] {
+  --md-primary: #0b57d0;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #d3e3fd;
+  --md-on-primary-container: #041e49;
+
+  --md-secondary-container: #c2e7ff;
+  --md-on-secondary-container: #001d35;
+
+  --md-surface: #ffffff;
+  --md-surface-container-low: #f8fafd;
+  --md-surface-container: #eef3fc;
+  --md-surface-container-high: #e3ebf6;
+  --md-surface-container-highest: #d8e2f0;
+
+  --md-on-surface: #1f1f1f;
+  --md-on-surface-variant: #444746;
+  --md-outline: #747775;
+  --md-outline-variant: #c4c7c5;
+
+  --md-error: #b3261e;
+  --md-error-container: #f9dedc;
+  --md-on-error-container: #410e0b;
+  --md-allergy-bg: #fdf2f2;
+  --md-allergy-border: #f2b8b5;
+
+  --md-warning-container: #fef0db;
+  --md-on-warning-container: #7a3e00;
+  --md-warning-border: #e67c00;
+
+  --md-success-container: #c4eed0;
+  --md-on-success-container: #072711;
+  --md-success-border: #1e8e3e;
+
+  --md-inverse-surface: #303030;
+  --md-inverse-on-surface: #f2f2f2;
+  --md-inverse-primary: #a8c7fa;
+
+  --md-hover-overlay: rgba(0, 0, 0, 0.06);
+  --sev-ring-inner: #2d3135;
+  --sev-ring-outer: #ffffff;
+
+  --sev-white: #ffffff;
+  --sev-green: #1e8e3e;
+  --sev-orange: #f57c00;
+  --sev-red: #d93025;
+  --sev-black: #18181b;
+
+  --md-shape-xs: 4px;
+  --md-shape-sm: 8px;
+  --md-shape-md: 12px;
+  --md-shape-lg: 16px;
+  --md-shape-xl: 24px;
+  --md-shape-xxl: 28px;
+  --md-shape-full: 9999px;
+
+  --md-easing: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ===== TOKENS MATERIAL DESIGN 3 : MODE SOMBRE ===== */
+[data-theme="dark"] {
+  --md-primary: #a8c7fa;
+  --md-on-primary: #062e6f;
+  --md-primary-container: #0842a0;
+  --md-on-primary-container: #d3e3fd;
+
+  --md-secondary-container: #004a77;
+  --md-on-secondary-container: #c2e7ff;
+
+  --md-surface: #111318;
+  --md-surface-container-low: #191c22;
+  --md-surface-container: #1e222a;
+  --md-surface-container-high: #282d37;
+  --md-surface-container-highest: #333945;
+
+  --md-on-surface: #e3e3e3;
+  --md-on-surface-variant: #b4b9c2;
+  --md-outline: #8e9199;
+  --md-outline-variant: #3f4552;
+
+  --md-error: #f2b8b5;
+  --md-error-container: #5c1916;
+  --md-on-error-container: #f9dedc;
+  --md-allergy-bg: #2a1617;
+  --md-allergy-border: #7d2c28;
+
+  --md-warning-container: #4a2900;
+  --md-on-warning-container: #ffdca8;
+  --md-warning-border: #e68a19;
+
+  --md-success-container: #0f3d1e;
+  --md-on-success-container: #b7ebc6;
+  --md-success-border: #38a159;
+
+  --md-inverse-surface: #e3e3e3;
+  --md-inverse-on-surface: #1f1f1f;
+  --md-inverse-primary: #0b57d0;
+
+  --md-hover-overlay: rgba(255, 255, 255, 0.08);
+  --sev-ring-inner: #d4d8e0;
+  --sev-ring-outer: #111318;
+}
+
+/* ===== TOKENS MATERIAL DESIGN 3 : MODE AMOLED ===== */
+[data-theme="amoled"] {
+  --md-primary: #a8c7fa;
+  --md-on-primary: #041e49;
+  --md-primary-container: #0b3880;
+  --md-on-primary-container: #dce8ff;
+
+  --md-secondary-container: #003a5e;
+  --md-on-secondary-container: #c2e7ff;
+
+  --md-surface: #000000;
+  --md-surface-container-low: #08090c;
+  --md-surface-container: #0d1015;
+  --md-surface-container-high: #171b23;
+  --md-surface-container-highest: #222731;
+
+  --md-on-surface: #eceef2;
+  --md-on-surface-variant: #a6adb8;
+  --md-outline: #6c727f;
+  --md-outline-variant: #2c313b;
+
+  --md-error: #f2b8b5;
+  --md-error-container: #4d120f;
+  --md-on-error-container: #ffdad6;
+  --md-allergy-bg: #1e0b0c;
+  --md-allergy-border: #69211d;
+
+  --md-warning-container: #3b2000;
+  --md-on-warning-container: #ffdda6;
+  --md-warning-border: #d97c00;
+
+  --md-success-container: #092e15;
+  --md-on-success-container: #b0e8c0;
+  --md-success-border: #2e8f4d;
+
+  --md-inverse-surface: #e8eaed;
+  --md-inverse-on-surface: #000000;
+  --md-inverse-primary: #0b57d0;
+
+  --md-hover-overlay: rgba(255, 255, 255, 0.1);
+  --sev-ring-inner: #e2e6ee;
+  --sev-ring-outer: #000000;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--md-surface-container);
+  color: var(--md-on-surface);
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  transition: background-color 0.2s var(--md-easing), color 0.2s var(--md-easing);
+}
+
+button, input, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  padding: 12px 12px 12px 0;
+  gap: 8px;
+}
+
+/* ===== BARRE LATÉRALE (MD3 NAVIGATION DRAWER) ===== */
+.sidebar {
+  width: 326px;
+  min-width: 326px;
+  background: var(--md-surface-container);
+  padding: 12px 12px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+  user-select: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 10px 12px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--md-shape-md);
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.brand h1 {
+  font-size: 17px;
+  font-weight: 650;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.brand small {
+  display: block;
+  color: var(--md-on-surface-variant);
+  font-size: 11.5px;
+  margin-top: 1px;
+}
+
+/* Extended FAB MD3 (Rayon 16px) */
+.fab-extended {
+  height: 48px;
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  border-radius: var(--md-shape-lg);
+  padding: 0 18px;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 2px 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  transition: transform 0.15s var(--md-easing), filter 0.15s;
+}
+
+.fab-extended:hover {
+  filter: brightness(0.96);
+}
+
+.fab-extended:active {
+  transform: scale(0.98);
+}
+
+/* Barre de recherche MD3 */
+.search-box {
+  position: relative;
+  margin: 0 2px 8px;
+}
+
+.search-box svg {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--md-on-surface-variant);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  height: 38px;
+  border-radius: var(--md-shape-full);
+  border: 1px solid transparent;
+  background: var(--md-surface-container-high);
+  padding: 0 14px 0 38px;
+  font-size: 13px;
+  color: var(--md-on-surface);
+  outline: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.search-input:focus {
+  background: var(--md-surface);
+  border-color: var(--md-primary);
+}
+
+.search-input::placeholder {
+  color: var(--md-on-surface-variant);
+}
+
+/* 4 Puces de filtrage MD3 (Rayon 8px) */
+.filter-chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  padding: 0 2px 8px;
+}
+
+.chip {
+  height: 29px;
+  padding: 0 4px;
+  border-radius: var(--md-shape-sm);
+  border: 1px solid var(--md-outline-variant);
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font-size: 11.5px;
+  font-weight: 550;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: all 0.15s var(--md-easing);
+}
+
+.chip:hover {
+  background: var(--md-surface-container-high);
+}
+
+.chip.active {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  border-color: transparent;
+  font-weight: 650;
+}
+
+.chip[data-filter="pending"].active {
+  background: var(--md-warning-container);
+  color: var(--md-on-warning-container);
+  border: 1px solid var(--md-warning-border);
+}
+
+/* Barre de tri compacte */
+.sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  margin: 0 2px 10px;
+  background: var(--md-surface-container-high);
+  border-radius: var(--md-shape-md);
+}
+
+.sort-btn {
+  flex: 1;
+  height: 26px;
+  border-radius: var(--md-shape-sm);
+  font-size: 11px;
+  font-weight: 550;
+  color: var(--md-on-surface-variant);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sort-btn:hover {
+  color: var(--md-on-surface);
+}
+
+.sort-btn.active {
+  background: var(--md-surface);
+  color: var(--md-primary);
+  font-weight: 650;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Pastille de gravité avec double contour haute visibilité */
+.severity-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--md-shape-full);
+  flex-shrink: 0;
+  display: inline-block;
+  border: 2px solid var(--sev-ring-inner);
+  box-shadow: 0 0 0 1.5px var(--sev-ring-outer);
+}
+
+.severity-dot.lg {
+  width: 19px;
+  height: 19px;
+  border-width: 2.5px;
+  cursor: pointer;
+  transition: transform 0.15s var(--md-easing);
+}
+
+.severity-dot.lg:hover {
+  transform: scale(1.15);
+}
+
+.sev-white { background-color: var(--sev-white); }
+.sev-green { background-color: var(--sev-green); }
+.sev-orange { background-color: var(--sev-orange); }
+.sev-red { background-color: var(--sev-red); }
+.sev-black { background-color: var(--sev-black); }
+
+/* Liste des patients */
+.patient-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.patient-item {
+  display: flex;
+  align-items: center;
+  border-radius: var(--md-shape-xl);
+  padding: 7px 8px 7px 14px;
+  gap: 4px;
+  transition: background 0.15s var(--md-easing);
+}
+
+.patient-item:hover {
+  background: var(--md-surface-container-high);
+}
+
+.patient-item.active {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.patient-name {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding: 2px 0;
+  color: inherit;
+}
+
+.patient-name.archived {
+  opacity: 0.55;
+}
+
+.patient-name.archived .patient-name-text {
+  text-decoration: line-through;
+}
+
+.patient-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.patient-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.patient-box-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--md-shape-xs);
+  background: var(--md-surface-container-highest);
+  color: var(--md-on-surface);
+  flex-shrink: 0;
+}
+
+.patient-item.active .patient-box-tag {
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+}
+
+.patient-name-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.allergy-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--md-error);
+  flex-shrink: 0;
+}
+
+.patient-meta {
+  font-size: 11.5px;
+  color: var(--md-on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 22px;
+}
+
+.patient-item.active .patient-meta {
+  color: var(--md-on-primary-container);
+  opacity: 0.85;
+}
+
+.sidebar-trackers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-left: 22px;
+  margin-top: 2px;
+}
+
+.mini-tracker {
+  font-size: 10px;
+  font-weight: 650;
+  padding: 1px 6px;
+  border-radius: var(--md-shape-xs);
+}
+
+.mini-tracker.pending {
+  background: var(--md-warning-container);
+  color: var(--md-on-warning-container);
+  border: 1px solid var(--md-warning-border);
+}
+
+.mini-tracker.done {
+  background: var(--md-success-container);
+  color: var(--md-on-success-container);
+  border: 1px solid var(--md-success-border);
+}
+
+.icon-button {
+  width: 32px;
+  height: 32px;
+  color: var(--md-on-surface-variant);
+  border-radius: var(--md-shape-full);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.icon-button:hover {
+  background: var(--md-hover-overlay);
+  color: var(--md-on-surface);
+}
+
+.delete-button:hover {
+  color: var(--md-error);
+  background: var(--md-error-container);
+}
+
+/* ===== MODULE SYNCHRO FICHIER JSON LOCAL ===== */
+.sync-box {
+  background: var(--md-surface-container-high);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-md);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sync-box.linked {
+  background: var(--md-success-container);
+  border-color: var(--md-success-border);
+}
+
+.sync-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sync-btn {
+  flex: 1;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: var(--md-shape-sm);
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.15s;
+}
+
+.sync-btn:hover {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.sync-btn.reconnect {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+
+.sync-active-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 11.5px;
+  font-weight: 650;
+  color: var(--md-on-success-container);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+}
+
+.sync-active-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sync-unlink-btn {
+  height: 24px;
+  padding: 0 8px;
+  border-radius: var(--md-shape-sm);
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--md-on-success-container);
+  font-size: 11px;
+  font-weight: 650;
+  flex-shrink: 0;
+}
+
+.sync-unlink-btn:hover {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+/* Pied de menu latéral */
+.sidebar-footer {
+  padding: 8px 2px 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--md-outline-variant);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-btn {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--md-on-surface-variant);
+  padding: 6px 10px;
+  border-radius: var(--md-shape-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.footer-btn:hover {
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+
+.footer-btn.tonal {
+  flex: 1;
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+
+.footer-btn.tonal:hover {
+  background: var(--md-surface-container-highest);
+}
+
+.footer-btn.help-btn {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+/* ===== PANNEAU PRINCIPAL MD3 ===== */
+.main {
+  flex: 1;
+  min-width: 0;
+  background: var(--md-surface);
+  border-radius: var(--md-shape-xxl);
+  border: 1px solid var(--md-outline-variant);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+[data-theme="light"] .main {
+  border-color: transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.topbar {
+  height: 56px;
+  flex-shrink: 0;
+  background: var(--md-surface);
+  border-bottom: 1px solid var(--md-surface-container-high);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 8px;
+}
+
+.menu-button {
+  display: none;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--md-shape-full);
+  color: var(--md-on-surface);
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.menu-button:hover {
+  background: var(--md-surface-container-high);
+}
+
+.topbar-title {
+  font-size: 16px;
+  font-weight: 600;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--md-on-surface-variant);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  height: 34px;
+  border-radius: var(--md-shape-full);
+  padding: 0 13px;
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s var(--md-easing), filter 0.15s;
+}
+
+.action-btn.tonal {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.action-btn.tonal:hover {
+  filter: brightness(0.95);
+}
+
+.action-btn.outlined {
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+}
+
+.action-btn.outlined:hover {
+  background: var(--md-surface-container-high);
+}
+
+.status-pill {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--md-shape-full);
+  background: var(--md-success-container);
+  color: var(--md-on-success-container);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-pill.error {
+  background: var(--md-error-container);
+  color: var(--md-on-error-container);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--md-success-border);
+}
+
+.status-pill.error .status-dot {
+  background: var(--md-error);
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px 18px;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.workspace {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* En-tête patient compact */
+.patient-header {
+  flex-shrink: 0;
+  background: var(--md-surface-container-low);
+  padding: 13px 18px;
+  border-radius: var(--md-shape-xl);
+  border: 1px solid var(--md-surface-container-high);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+  flex-wrap: wrap;
+}
+
+.patient-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: relative;
+  min-width: 0;
+}
+
+.patient-header h2 {
+  font-size: 20px;
+  font-weight: 650;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.severity-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: var(--md-surface-container-high);
+  padding: 8px 12px;
+  border-radius: var(--md-shape-full);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--md-outline-variant);
+  display: none;
+  align-items: center;
+  gap: 10px;
+  z-index: 40;
+}
+
+.severity-popover.open {
+  display: inline-flex;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--md-shape-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge-box {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.badge-age {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  border-radius: var(--md-shape-full);
+}
+
+.badge-time {
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface-variant);
+  border-radius: var(--md-shape-full);
+}
+
+.badge-archived {
+  background: var(--md-surface-container-highest);
+  color: var(--md-on-surface-variant);
+  border-radius: var(--md-shape-full);
+}
+
+.badge-allergy {
+  background: var(--md-error-container);
+  color: var(--md-on-error-container);
+  border-radius: var(--md-shape-full);
+  cursor: pointer;
+}
+
+.badge-no-allergy {
+  background: var(--md-success-container);
+  color: var(--md-on-success-container);
+  border-radius: var(--md-shape-full);
+  cursor: pointer;
+}
+
+/* Grille 4 colonnes verrouillée sur 1 ligne */
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, auto));
+  gap: 6px;
+}
+
+.tracker-chip {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--md-shape-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface);
+  color: var(--md-on-surface-variant);
+  white-space: nowrap;
+  transition: all 0.15s var(--md-easing);
+}
+
+.tracker-chip:hover {
+  background: var(--md-surface-container-high);
+}
+
+.tracker-chip.state-1 {
+  background: var(--md-warning-container);
+  color: var(--md-on-warning-container);
+  border-color: var(--md-warning-border);
+}
+
+.tracker-chip.state-2 {
+  background: var(--md-success-container);
+  color: var(--md-on-success-container);
+  border-color: var(--md-success-border);
+}
+
+.lbl-short { display: none; }
+
+/* Barre d'onglets MD3 */
+.tabs-bar {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  background: var(--md-surface-container-low);
+  border: 1px solid var(--md-surface-container-high);
+  border-radius: var(--md-shape-lg);
+}
+
+.tab-btn {
+  height: 35px;
+  padding: 0 13px;
+  border-radius: var(--md-shape-md);
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--md-on-surface-variant);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  transition: background 0.15s var(--md-easing), color 0.15s;
+}
+
+.tab-btn:hover {
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+
+.tab-btn.active {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  font-weight: 650;
+}
+
+.tab-btn.overview-tab {
+  border: 1px dashed var(--md-outline-variant);
+}
+
+.tab-btn.overview-tab.active {
+  border-color: transparent;
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+
+.tab-btn.allergy-alert {
+  background: var(--md-error-container);
+  color: var(--md-on-error-container);
+}
+
+.tab-btn.allergy-alert.active {
+  box-shadow: inset 0 0 0 2px var(--md-error);
+}
+
+.tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--md-primary);
+  display: none;
+  flex-shrink: 0;
+}
+
+.tab-btn.has-content .tab-dot {
+  display: inline-block;
+}
+
+.tab-btn.allergy-alert .tab-dot {
+  background: var(--md-error);
+}
+
+.tab-btn.allergy-none .tab-dot {
+  display: inline-block;
+  background: var(--md-success-border);
+}
+
+/* Hôte du panneau actif */
+.panel-host {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Panneau d'édition actif */
+.tab-panel {
+  flex: 1;
+  min-height: 0;
+  background: var(--md-surface-container);
+  border-radius: var(--md-shape-xl);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.tab-panel.allergy-active {
+  background: var(--md-allergy-bg);
+  box-shadow: inset 0 0 0 1px var(--md-allergy-border);
+}
+
+.tab-panel.allergy-clear {
+  box-shadow: inset 0 0 0 1px var(--md-success-border);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.panel-title {
+  font-size: 15.5px;
+  font-weight: 650;
+  color: var(--md-on-surface);
+}
+
+.panel-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== GRILLE DE CONSTANTES MD3 (EXAMEN CLINIQUE) ===== */
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.vitals-grid.compact {
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+  gap: 6px;
+}
+
+.vital-box {
+  background: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-md);
+  padding: 6px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: text;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.vital-box:focus-within {
+  border-color: var(--md-primary);
+  box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.2);
+}
+
+.vital-box.filled {
+  background: var(--md-surface-container-low);
+  border-color: var(--md-primary);
+}
+
+.vital-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.vital-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--md-primary);
+  letter-spacing: 0.2px;
+}
+
+.vital-unit {
+  font-size: 10px;
+  color: var(--md-on-surface-variant);
+}
+
+.vital-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--md-on-surface);
+  font-size: 14.5px;
+  font-weight: 650;
+  padding: 0;
+  outline: none;
+  min-width: 0;
+}
+
+.vital-input::placeholder {
+  color: var(--md-on-surface-variant);
+  opacity: 0.42;
+  font-weight: 400;
+}
+
+.vitals-grid.compact .vital-box {
+  padding: 4px 7px;
+  border-radius: var(--md-shape-sm);
+}
+
+.vitals-grid.compact .vital-input {
+  font-size: 13px;
+}
+
+/* Coche MD3 "Aucune allergie" */
+.no-allergy-check {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--md-shape-full);
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.no-allergy-check:hover {
+  background: var(--md-surface-container-high);
+}
+
+.no-allergy-check.checked {
+  background: var(--md-success-container);
+  color: var(--md-on-success-container);
+  border-color: var(--md-success-border);
+}
+
+.no-allergy-check input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--md-success-border);
+  cursor: pointer;
+}
+
+.no-allergy-check.compact {
+  height: 26px;
+  padding: 0 9px;
+  font-size: 11.5px;
+  gap: 5px;
+}
+
+.no-allergy-check.compact input {
+  width: 13px;
+  height: 13px;
+}
+
+.panel-hint {
+  font-size: 11.5px;
+  color: var(--md-on-surface-variant);
+}
+
+.tab-textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 110px;
+  resize: none;
+  padding: 16px 18px;
+  background: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-lg);
+  outline: none;
+  color: var(--md-on-surface);
+  font-size: 15px;
+  line-height: 1.65;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.tab-textarea:focus {
+  border-color: var(--md-primary);
+  box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.22);
+}
+
+.tab-textarea::placeholder {
+  color: var(--md-on-surface-variant);
+  opacity: 0.7;
+}
+
+/* Vue globale */
+.overview-grid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-content: start;
+  padding-right: 4px;
+  touch-action: pan-y;
+}
+
+.overview-card {
+  background: var(--md-surface-container-low);
+  border-radius: var(--md-shape-lg);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--md-surface-container-highest);
+}
+
+.overview-card.allergy-active {
+  background: var(--md-allergy-bg);
+  border-color: var(--md-allergy-border);
+}
+
+.overview-card.allergy-clear {
+  border-color: var(--md-success-border);
+}
+
+.overview-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.overview-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.overview-card-title {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--md-primary);
+}
+
+.overview-card.allergy-active .overview-card-title {
+  color: var(--md-error);
+}
+
+.overview-card.allergy-clear .overview-card-title {
+  color: var(--md-success-border);
+}
+
+.overview-open-btn {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--md-on-surface-variant);
+  padding: 3px 8px;
+  border-radius: var(--md-shape-sm);
+}
+
+.overview-open-btn:hover {
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+
+.overview-textarea {
+  width: 100%;
+  min-height: 74px;
+  resize: vertical;
+  padding: 10px 12px;
+  background: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-md);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--md-on-surface);
+  outline: none;
+}
+
+.overview-textarea:focus {
+  border-color: var(--md-primary);
+}
+
+/* État vide */
+.empty-state {
+  margin: auto;
+  max-width: 440px;
+  text-align: center;
+  padding: 36px 24px;
+  background: var(--md-surface-container-low);
+  border-radius: var(--md-shape-xxl);
+  border: 1px solid var(--md-surface-container-high);
+}
+
+.empty-state h2 {
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+.empty-state p {
+  color: var(--md-on-surface-variant);
+  line-height: 1.5;
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+.empty-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===== MODALES MD3 UNIVERSELLES ===== */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 80;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal-card {
+  border-radius: var(--md-shape-xxl);
+  background: var(--md-surface-container-low);
+  color: var(--md-on-surface);
+  padding: 22px;
+  width: 100%;
+  max-width: 460px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--md-outline-variant);
+}
+
+.modal-card.wide {
+  max-width: 560px;
+}
+
+.dialog-title {
+  font-size: 20px;
+  font-weight: 650;
+  margin: 0 0 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 105px;
+  gap: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+  min-width: 0;
+}
+
+.form-field label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--md-on-surface-variant);
+  padding-left: 4px;
+}
+
+.form-field input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: var(--md-shape-md);
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface);
+  font-size: 14.5px;
+  color: var(--md-on-surface);
+  outline: none;
+}
+
+.form-field input:focus {
+  border-color: var(--md-primary);
+}
+
+.severity-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  background: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-md);
+}
+
+.severity-option {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 7px 10px;
+  border-radius: var(--md-shape-sm);
+  font-size: 12.5px;
+  font-weight: 550;
+  color: var(--md-on-surface);
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.severity-option:hover {
+  background: var(--md-surface-container-high);
+}
+
+.severity-option.selected {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  font-weight: 650;
+}
+
+.help-section {
+  background: var(--md-surface);
+  border-radius: var(--md-shape-lg);
+  padding: 13px 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--md-outline-variant);
+}
+
+.help-section h4 {
+  margin: 0 0 9px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--md-primary);
+}
+
+.help-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+}
+
+.help-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  align-items: center;
+  font-size: 12.5px;
+}
+
+kbd {
+  background: var(--md-surface-container-high);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--md-on-surface);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.btn-text {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--md-shape-full);
+  color: var(--md-primary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-text:hover {
+  background: var(--md-hover-overlay);
+}
+
+.btn-filled {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: var(--md-shape-full);
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-filled:hover {
+  filter: brightness(0.95);
+}
+
+.btn-outline-lg {
+  height: 40px;
+  padding: 0 18px;
+  border-radius: var(--md-shape-full);
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-outline-lg:hover {
+  background: var(--md-surface-container-high);
+}
+
+/* ===== SNACKBAR MD3 AVEC BARRE DE COMPTE À REBOURS ===== */
+.snackbar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  min-width: 280px;
+  max-width: calc(100vw - 32px);
+  background: var(--md-inverse-surface);
+  color: var(--md-inverse-on-surface);
+  border-radius: var(--md-shape-md);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: transform 0.25s var(--md-easing), opacity 0.25s var(--md-easing);
+  z-index: 90;
+  pointer-events: none;
+}
+
+.snackbar.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.snackbar-content {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13.5px;
+}
+
+.snackbar-action {
+  color: var(--md-inverse-primary);
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 5px 10px;
+  border-radius: var(--md-shape-sm);
+  white-space: nowrap;
+}
+
+.snackbar-action:hover {
+  background: rgba(168, 199, 250, 0.14);
+}
+
+.snackbar-progress-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(128, 128, 128, 0.25);
+}
+
+.snackbar-progress-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--md-inverse-primary);
+  transform-origin: left;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 15;
+}
+
+#printArea {
+  display: none;
+}
+
+/* ===== ADAPTATION MOBILE / FENÊTRE ÉTROITE ===== */
+@media (max-width: 820px) {
+  .app { padding: 0; }
+  .main { border-radius: 0; border: none; }
+  .sidebar {
+    position: fixed;
+    left: -350px;
+    top: 0;
+    bottom: 0;
+    border-radius: 0 var(--md-shape-xxl) var(--md-shape-xxl) 0;
+    transition: left 0.25s var(--md-easing);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+  }
+  .sidebar.open { left: 0; }
+  .overlay.visible { display: block; }
+  .menu-button { display: grid; }
+
+  .topbar {
+    height: 52px;
+    padding: 0 10px;
+    gap: 5px;
+  }
+
+  .topbar-title { font-size: 14.5px; }
+
+  .action-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .action-btn .btn-label { display: none; }
+  .status-pill .status-text { display: none; }
+  .status-pill { padding: 6px; }
+
+  .content {
+    padding: 10px 10px 12px;
+    gap: 10px;
+  }
+
+  .workspace { gap: 9px; }
+
+  .patient-header {
+    padding: 10px 12px;
+    border-radius: var(--md-shape-lg);
+    gap: 8px;
+  }
+
+  .patient-header h2 { font-size: 18px; }
+
+  .tracker-grid {
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  .tracker-chip {
+    height: 30px;
+    padding: 0 4px;
+    font-size: 11.5px;
+    gap: 3px;
+  }
+
+  .lbl-full { display: none; }
+  .lbl-short { display: inline; }
+
+  .tabs-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    padding: 5px;
+    gap: 5px;
+    border-radius: var(--md-shape-md);
+  }
+
+  .tabs-bar::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    height: 33px;
+    padding: 0 11px;
+    font-size: 12.5px;
+    flex-shrink: 0;
+  }
+
+  .tab-panel {
+    padding: 12px;
+    border-radius: var(--md-shape-lg);
+    gap: 8px;
+  }
+
+  .panel-title { font-size: 14.5px; }
+  .panel-hint { display: none; }
+
+  .vitals-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .vital-box {
+    padding: 4px 6px;
+    border-radius: var(--md-shape-sm);
+  }
+
+  .vital-label { font-size: 10.5px; }
+  .vital-unit { font-size: 9px; }
+  .vital-input { font-size: 13.5px; }
+
+  .tab-textarea {
+    padding: 12px;
+    font-size: 14.5px;
+    border-radius: var(--md-shape-md);
+  }
+
+  .overview-grid { grid-template-columns: 1fr; }
+
+  .snackbar {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    min-width: auto;
+  }
+}
+
+/* Barre horizontale fine sur PC en fenêtre étroite (souris / touchpad) */
+@media (max-width: 820px) and (pointer: fine) {
+  .tabs-bar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--md-outline-variant) transparent;
+    padding-bottom: 7px;
+  }
+
+  .tabs-bar::-webkit-scrollbar {
+    display: block;
+    height: 4px;
+  }
+
+  .tabs-bar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .tabs-bar::-webkit-scrollbar-thumb {
+    background: var(--md-outline-variant);
+    border-radius: var(--md-shape-full);
+  }
+
+  .tabs-bar::-webkit-scrollbar-thumb:hover {
+    background: var(--md-primary);
+  }
+}
+
+/* ===== FEUILLE DE STYLE D'IMPRESSION (@media print) ===== */
+@media print {
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+  }
+
+  .app, .modal-backdrop, .snackbar, .overlay {
+    display: none !important;
+  }
+
+  #printArea {
+    display: block !important;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    color: #000000;
+  }
+
+  .print-doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #000;
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+  }
+
+  .print-doc-header h1 {
+    font-size: 16pt;
+    margin: 0;
+  }
+
+  .print-doc-header span {
+    font-size: 9.5pt;
+    color: #333;
+  }
+
+  .print-patient {
+    border: 1px solid #999;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-patient-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+
+  .print-patient-title {
+    font-size: 13pt;
+    font-weight: 700;
+  }
+
+  .print-patient-meta {
+    font-size: 9.5pt;
+    color: #333;
+  }
+
+  .print-trackers {
+    font-size: 9.5pt;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+    background: #f2f2f2;
+    border-radius: 4px;
+  }
+
+  .print-vitals {
+    font-size: 9.5pt;
+    font-weight: 600;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    background: #f5f5f5;
+    border-left: 3px solid #000;
+  }
+
+  .print-section {
+    margin-bottom: 7px;
+  }
+
+  .print-section-title {
+    font-weight: 700;
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  .print-section-body {
+    white-space: pre-wrap;
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  .print-allergy-box {
+    border: 1.5px solid #000;
+    padding: 5px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Dossier patient</h1>
+        <small>Urgences · MD3</small>
+      </div>
+    </div>
+
+    <button type="button" class="fab-extended" id="btnNewPatient" title="Raccourci : Alt + N">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      Nouveau patient
+    </button>
+
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+      </svg>
+      <input type="search" id="searchInput" class="search-input" placeholder="Box, nom, motif... (Alt+F)">
+    </div>
+
+    <div class="filter-chips" id="filterChips">
+      <button type="button" class="chip active" data-filter="all">Tous</button>
+      <button type="button" class="chip" data-filter="active">Présents</button>
+      <button type="button" class="chip" data-filter="pending">Attente</button>
+      <button type="button" class="chip" data-filter="archived">Sortis</button>
+    </div>
+
+    <div class="sort-bar" id="sortBar" role="group" aria-label="Trier les patients">
+      <button type="button" class="sort-btn active" data-sort="arrival">Arrivée ↓</button>
+      <button type="button" class="sort-btn" data-sort="severity">Gravité</button>
+      <button type="button" class="sort-btn" data-sort="box">Box</button>
+      <button type="button" class="sort-btn" data-sort="name">Nom</button>
+    </div>
+
+    <div class="patient-list" id="patientList"></div>
+
+    <div class="sidebar-footer">
+      <!-- Bloc synchronisation directe fichier JSON (Chrome / Edge / Brave PC) -->
+      <div class="sync-box" id="fileSyncBox" style="display:none">
+        <div class="sync-row" id="syncReconnectRow" style="display:none">
+          <button type="button" class="sync-btn reconnect" id="btnReconnectJson"></button>
+        </div>
+        <div class="sync-row" id="syncUnlinkedRow">
+          <button type="button" class="sync-btn" id="btnLinkOpen" title="Charger un fichier JSON existant et synchroniser automatiquement">Ouvrir JSON</button>
+          <button type="button" class="sync-btn" id="btnLinkCreate" title="Créer un fichier JSON à côté du HTML pour écriture automatique">Nouveau JSON</button>
+        </div>
+        <div class="sync-row" id="syncLinkedRow" style="display:none">
+          <span class="sync-active-name" id="syncActiveName">
+            <span class="status-dot"></span>
+            <span class="sync-active-text" id="syncFileNameText"></span>
+          </span>
+          <button type="button" class="sync-unlink-btn" id="btnUnlinkJson" title="Arrêter la synchronisation automatique">Délier</button>
+        </div>
+      </div>
+
+      <div class="footer-row">
+        <button type="button" class="footer-btn tonal" id="themeToggleBtn" title="Changer le thème (Clair / Sombre / AMOLED)">
+          <span id="themeIcon"></span>
+          <span id="themeLabel">Clair</span>
+        </button>
+        <button type="button" class="footer-btn tonal" id="btnPrintAll" title="Imprimer tous les dossiers affichés">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Imprimer tout
+        </button>
+      </div>
+      <div class="footer-row">
+        <button type="button" class="footer-btn help-btn" id="btnHelp" title="Légende et raccourcis (Alt + H)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/>
+          </svg>
+          Aide
+        </button>
+        <div>
+          <button type="button" class="footer-btn" id="btnExport" title="Télécharger une copie JSON">Export</button>
+          <button type="button" class="footer-btn" id="btnImport" title="Importer un fichier JSON">Import</button>
+          <input type="file" id="importFile" accept=".json" style="display:none">
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <main class="main">
+    <header class="topbar">
+      <button type="button" class="menu-button" id="btnMenu" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+      <div class="topbar-title" id="topbarTitle">Dossier patient</div>
+      <div class="topbar-actions" id="topbarActions" style="display:none">
+        <button type="button" class="action-btn outlined" id="btnPrintActive" title="Imprimer ce patient (Alt + P)" aria-label="Imprimer ce patient">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          <span class="btn-label">Imprimer</span>
+        </button>
+        <button type="button" class="action-btn tonal" id="btnCopyActive" title="Copier l'observation (Alt + C)" aria-label="Copier l'observation">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span class="btn-label">Copier</span>
+        </button>
+        <button type="button" class="action-btn outlined" id="btnEditActive" title="Modifier Box & Identité (Alt + E)" aria-label="Modifier Box et identité">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          <span class="btn-label">Box & Identité</span>
+        </button>
+      </div>
+      <div class="status-pill" id="saveStatus" title="État de la sauvegarde">
+        <span class="status-dot"></span>
+        <span class="status-text">Enregistré</span>
+      </div>
+    </header>
+
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<div id="printArea"></div>
+
+<!-- Modale Création / Édition Patient -->
+<div class="modal-backdrop" id="patientModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <form id="patientForm">
+      <h3 class="dialog-title" id="modalTitle">Nouveau patient</h3>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="inputBox">Box / Secteur</label>
+          <input type="text" id="inputBox" placeholder="Ex : Box 4, SAUV">
+        </div>
+        <div class="form-field">
+          <label for="inputAge">Âge</label>
+          <input type="number" id="inputAge" min="0" max="130" placeholder="Ans">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="inputName">Nom et prénom</label>
+        <input type="text" id="inputName" required placeholder="Ex : MARTIN Jean">
+      </div>
+
+      <div class="form-field">
+        <label for="inputReason">Motif principal d'admission</label>
+        <input type="text" id="inputReason" placeholder="Ex : Douleur thoracique">
+      </div>
+
+      <div class="form-field">
+        <label>Pastille de gravité / tri</label>
+        <div class="severity-picker" id="modalSeverityPicker">
+          <button type="button" class="severity-option" data-sev="white">
+            <span class="severity-dot sev-white"></span> Blanc
+          </button>
+          <button type="button" class="severity-option" data-sev="green">
+            <span class="severity-dot sev-green"></span> Vert
+          </button>
+          <button type="button" class="severity-option" data-sev="orange">
+            <span class="severity-dot sev-orange"></span> Orange
+          </button>
+          <button type="button" class="severity-option" data-sev="red">
+            <span class="severity-dot sev-red"></span> Rouge
+          </button>
+          <button type="button" class="severity-option" data-sev="black">
+            <span class="severity-dot sev-black"></span> Noir
+          </button>
+        </div>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn-text" id="btnCancelPatient">Annuler</button>
+        <button type="submit" class="btn-filled">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modale Aide -->
+<div class="modal-backdrop" id="helpModal" aria-hidden="true">
+  <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <h3 class="dialog-title" id="helpTitle">Aide & Légende</h3>
+
+    <div class="help-section">
+      <h4>Pastilles de gravité / Tri</h4>
+      <div class="help-list">
+        <div class="help-item">
+          <span class="severity-dot sev-black"></span>
+          <span><strong>Noire</strong> — Urgence vitale immédiate / SAUV / Critique</span>
+        </div>
+        <div class="help-item">
+          <span class="severity-dot sev-red"></span>
+          <span><strong>Rouge</strong> — Très urgent / Risque vital ou fonctionnel à court terme</span>
+        </div>
+        <div class="help-item">
+          <span class="severity-dot sev-orange"></span>
+          <span><strong>Orange</strong> — Urgent / Bilan ou prise en charge prioritaire</span>
+        </div>
+        <div class="help-item">
+          <span class="severity-dot sev-green"></span>
+          <span><strong>Verte</strong> — Peu urgent / Patient stable</span>
+        </div>
+        <div class="help-item">
+          <span class="severity-dot sev-white"></span>
+          <span><strong>Blanche</strong> — Consultation simple / Non classé</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="help-section">
+      <h4>Puces de suivi (Bio, ECG, Imagerie, Avis)</h4>
+      <div class="help-list">
+        <div class="help-item">
+          <span class="mini-tracker" style="border:1px solid var(--md-outline-variant);background:var(--md-surface);color:var(--md-on-surface-variant)">○ Neutre</span>
+          <span>Non demandé</span>
+        </div>
+        <div class="help-item">
+          <span class="mini-tracker pending">● En attente</span>
+          <span>1er clic : Examen prescrit / Résultat ou avis attendu (filtre Attente)</span>
+        </div>
+        <div class="help-item">
+          <span class="mini-tracker done">✓ Vu / Fait</span>
+          <span>2e clic : Résultat récupéré et interprété</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="help-section">
+      <h4>Raccourcis clavier & Tactile</h4>
+      <div class="shortcut-grid">
+        <kbd>Tab / Shift+Tab</kbd> <span>Naviguer entre les constantes et les rubriques</span>
+        <kbd>Molette / Touchpad</kbd> <span>Défiler horizontalement dans la barre d'onglets en fenêtre étroite</span>
+        <kbd>Swipe ← / →</kbd> <span>Glisser horizontalement sur mobile pour changer de rubrique</span>
+        <kbd>Alt + I</kbd> <span>Aller directement aux constantes (Examen clinique)</span>
+        <kbd>Alt + N</kbd> <span>Nouveau patient</span>
+        <kbd>Alt + F</kbd> <span>Rechercher (Box, nom, motif)</span>
+        <kbd>Alt + E</kbd> <span>Modifier Box, identité ou pastille</span>
+        <kbd>Alt + C</kbd> <span>Copier l'observation complète</span>
+        <kbd>Alt + P</kbd> <span>Imprimer le dossier du patient actif</span>
+        <kbd>Alt + V</kbd> <span>Basculer vers la Vue globale (toutes les rubriques)</span>
+        <kbd>Alt + ← / →</kbd> <span>Onglet précédent / suivant</span>
+        <kbd>Alt + ↑ / ↓</kbd> <span>Patient précédent / suivant</span>
+        <kbd>Alt + H</kbd> <span>Ouvrir / Fermer l'aide</span>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn-filled" id="btnCloseHelp">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Snackbar avec barre de compte à rebours -->
+<div class="snackbar" id="snackbar" role="status" aria-live="polite">
+  <div class="snackbar-content">
+    <span id="snackbarMsg"></span>
+    <button type="button" id="snackbarAction" class="snackbar-action" style="display:none"></button>
+  </div>
+  <div class="snackbar-progress-track">
+    <div class="snackbar-progress-bar" id="snackbarProgress"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "dossier_patient_md3_v2";
+  var THEME_KEY = "dossier_patient_theme";
+  var OVERVIEW_TAB = "__all__";
+  var IDB_NAME = "urgences_fs_handles_v1";
+  var IDB_STORE = "handles";
+  var IDB_KEY = "main_json";
+
+  var THEMES = [
+    {id: "light", label: "Clair", meta: "#eef3fc", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>'},
+    {id: "dark", label: "Sombre", meta: "#111318", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'},
+    {id: "amoled", label: "AMOLED", meta: "#000000", icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.1"/><path d="M12 3a9 9 0 0 0 0 18z"/></svg>'}
+  ];
+
+  var SEVERITIES = ["white", "green", "orange", "red", "black"];
+  var SEVERITY_RANK = {black: 0, red: 1, orange: 2, green: 3, white: 4};
+  var SEVERITY_LABELS = {
+    white: "Blanc (Non classé / Consultation)",
+    green: "Vert (Peu urgent / Stable)",
+    orange: "Orange (Urgent)",
+    red: "Rouge (Très urgent)",
+    black: "Noir (Urgence absolue / SAUV)"
+  };
+
+  var TRACKERS = [
+    {id: "bio", label: "Bio", short: "Bio"},
+    {id: "ecg", label: "ECG", short: "ECG"},
+    {id: "imagerie", label: "Imagerie", short: "Img"},
+    {id: "avis", label: "Avis", short: "Avis"}
+  ];
+
+  var VITAL_FIELDS = [
+    {id: "pa", label: "PA", unit: "mmHg", suffix: " mmHg", placeholder: "120/80", mode: "text"},
+    {id: "fc", label: "FC", unit: "/min", suffix: " /min", placeholder: "75", mode: "numeric"},
+    {id: "spo2", label: "SpO2", unit: "%", suffix: "%", placeholder: "98", mode: "numeric"},
+    {id: "temp", label: "T°", unit: "°C", suffix: " °C", placeholder: "37.0", mode: "decimal"},
+    {id: "fr", label: "FR", unit: "/min", suffix: " /min", placeholder: "16", mode: "numeric"},
+    {id: "hgt", label: "HGT", unit: "g/L", suffix: " g/L", placeholder: "1.05", mode: "decimal"},
+    {id: "eva", label: "EVA", unit: "/10", suffix: "/10", placeholder: "0", mode: "numeric"}
+  ];
+
+  var sections = [
+    {id: "motif", title: "Motif d'hospitalisation", short: "Motif"},
+    {id: "antecedents", title: "Antécédents", short: "Antécédents"},
+    {id: "allergies", title: "Allergies", short: "Allergies"},
+    {id: "mode_vie", title: "Mode de vie", short: "Mode de vie"},
+    {id: "traitement", title: "Traitement habituel", short: "Traitement"},
+    {id: "anamnese", title: "Anamnèse", short: "Anamnèse"},
+    {id: "examen", title: "Examen clinique", short: "Examen"},
+    {id: "bilan", title: "Bilan paraclinique", short: "Bilan"},
+    {id: "evolution", title: "Évolution", short: "Évolution"},
+    {id: "conclusion", title: "Conclusion", short: "Conclusion"},
+    {id: "conduite", title: "Conduite à tenir", short: "CAT"},
+    {id: "sortie", title: "Traitement de sortie", short: "Sortie"}
+  ];
+
+  var supportsFileSync = !!(window.showOpenFilePicker && window.showSaveFilePicker);
+  var linkedFileHandle = null;
+  var linkedFileName = "";
+  var storedFileHandle = null;
+  var isWritingFile = false;
+  var pendingFileWrite = false;
+
+  var patients = [];
+  var activePatient = null;
+  var activeTab = "motif";
+  var currentFilter = "all";
+  var currentSort = "arrival";
+  var sortDir = "desc";
+  var editingPatientId = null;
+  var selectedModalSeverity = "white";
+  var saveTimer = null;
+  var snackbarTimer = null;
+  var lastDeleted = null;
+
+  function setChildren(parent, children) {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+    for (var i = 0; i < children.length; i++) {
+      if (children[i]) parent.appendChild(children[i]);
+    }
+  }
+
+  function findPatient(id) {
+    for (var i = 0; i < patients.length; i++) {
+      if (patients[i].id === id) return patients[i];
+    }
+    return null;
+  }
+
+  function findSection(id) {
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].id === id) return sections[i];
+    }
+    return sections[0];
+  }
+
+  function setSaveStatus(text, isError) {
+    var pill = document.getElementById("saveStatus");
+    var label = document.querySelector("#saveStatus .status-text");
+    if (pill) pill.classList.toggle("error", !!isError);
+    if (label) label.textContent = text;
+  }
+
+  // ===== INDEXEDDB POUR MÉMORISATION DU HANDLE FICHIER =====
+  function openHandleDB(callback) {
+    if (!window.indexedDB) {
+      callback(null);
+      return;
+    }
+    try {
+      var req = window.indexedDB.open(IDB_NAME, 1);
+      req.onupgradeneeded = function (e) {
+        var db = e.target.result;
+        if (!db.objectStoreNames.contains(IDB_STORE)) {
+          db.createObjectStore(IDB_STORE);
+        }
+      };
+      req.onsuccess = function (e) { callback(e.target.result); };
+      req.onerror = function () { callback(null); };
+    } catch (e) {
+      callback(null);
+    }
+  }
+
+  function persistHandleInIDB(handle) {
+    openHandleDB(function (db) {
+      if (!db) return;
+      try {
+        var tx = db.transaction(IDB_STORE, "readwrite");
+        var store = tx.objectStore(IDB_STORE);
+        if (handle) store.put(handle, IDB_KEY);
+        else store.delete(IDB_KEY);
+      } catch (e) {}
+    });
+  }
+
+  function readHandleFromIDB(callback) {
+    openHandleDB(function (db) {
+      if (!db) { callback(null); return; }
+      try {
+        var tx = db.transaction(IDB_STORE, "readonly");
+        var req = tx.objectStore(IDB_STORE).get(IDB_KEY);
+        req.onsuccess = function () { callback(req.result || null); };
+        req.onerror = function () { callback(null); };
+      } catch (e) {
+        callback(null);
+      }
+    });
+  }
+
+  // ===== SYNCHRONISATION AUTOMATIQUE FICHIER JSON LOCAL =====
+  function updateFileSyncUI() {
+    var box = document.getElementById("fileSyncBox");
+    if (!box) return;
+    if (!supportsFileSync) {
+      box.style.display = "none";
+      return;
+    }
+    box.style.display = "flex";
+
+    var unlinkedRow = document.getElementById("syncUnlinkedRow");
+    var linkedRow = document.getElementById("syncLinkedRow");
+    var reconnectRow = document.getElementById("syncReconnectRow");
+    var reconnectBtn = document.getElementById("btnReconnectJson");
+    var fileNameText = document.getElementById("syncFileNameText");
+
+    if (linkedFileHandle) {
+      box.classList.add("linked");
+      unlinkedRow.style.display = "none";
+      reconnectRow.style.display = "none";
+      linkedRow.style.display = "flex";
+      fileNameText.textContent = linkedFileName;
+      fileNameText.title = "Synchronisation auto : " + linkedFileName;
+    } else {
+      box.classList.remove("linked");
+      linkedRow.style.display = "none";
+      unlinkedRow.style.display = "flex";
+      if (storedFileHandle) {
+        reconnectRow.style.display = "flex";
+        reconnectBtn.textContent = "Reconnecter " + (storedFileHandle.name || "JSON");
+      } else {
+        reconnectRow.style.display = "none";
+      }
+    }
+  }
+
+  function applyLoadedJsonText(text) {
+    var trimmed = String(text || "").trim();
+    if (!trimmed) {
+      patients = [];
+      activePatient = null;
+    } else {
+      var parsed = JSON.parse(trimmed);
+      if (!parsed || !Array.isArray(parsed.patients)) {
+        throw new Error("Format JSON non reconnu");
+      }
+      patients = normalizePatients(parsed.patients);
+      activePatient = parsed.activePatient || (patients.length ? patients[0].id : null);
+      if (!findPatient(activePatient)) {
+        activePatient = patients.length ? patients[0].id : null;
+      }
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({patients: patients, activePatient: activePatient}));
+    } catch (e) {}
+    updateSortUI();
+    renderList();
+    renderPatient();
+  }
+
+  function writeLinkedFile() {
+    if (!linkedFileHandle) return;
+    if (isWritingFile) {
+      pendingFileWrite = true;
+      return;
+    }
+    isWritingFile = true;
+    pendingFileWrite = false;
+    setSaveStatus("Synchro JSON...", false);
+
+    var payload = JSON.stringify({patients: patients, activePatient: activePatient}, null, 2);
+
+    linkedFileHandle.createWritable().then(function (writable) {
+      return writable.write(payload).then(function () {
+        return writable.close();
+      });
+    }).then(function () {
+      isWritingFile = false;
+      if (pendingFileWrite) {
+        writeLinkedFile();
+      } else {
+        setSaveStatus("JSON synchro", false);
+      }
+    }, function () {
+      isWritingFile = false;
+      pendingFileWrite = false;
+      setSaveStatus("Erreur écriture JSON", true);
+      showSnackbar("Écriture JSON bloquée : vérifiez les droits du fichier");
+    });
+  }
+
+  function activateHandleForReadWrite(handle) {
+    var permPromise = handle.requestPermission
+      ? handle.requestPermission({mode: "readwrite"})
+      : Promise.resolve("granted");
+
+    return permPromise.then(function (perm) {
+      return handle.getFile().then(function (file) {
+        return file.text().then(function (text) {
+          applyLoadedJsonText(text);
+          if (perm === "granted") {
+            linkedFileHandle = handle;
+            linkedFileName = handle.name || "urgences_patients.json";
+            storedFileHandle = handle;
+            persistHandleInIDB(handle);
+            updateFileSyncUI();
+            setSaveStatus("JSON synchro", false);
+            showSnackbar("Fichier lié et chargé : " + linkedFileName);
+          } else {
+            showSnackbar("Chargé en lecture seule (écriture refusée)");
+          }
+        });
+      });
+    });
+  }
+
+  function linkExistingJson() {
+    if (!supportsFileSync) {
+      showSnackbar("Utilisez Chrome ou Edge sur PC pour la synchronisation fichier");
+      return;
+    }
+    window.showOpenFilePicker({
+      id: "urgences_json_sync",
+      multiple: false,
+      types: [{description: "Fichier JSON", accept: {"application/json": [".json"]}}]
+    }).then(function (handles) {
+      if (!handles || !handles.length) return;
+      return activateHandleForReadWrite(handles[0]);
+    }, function (err) {
+      if (err && err.name === "AbortError") return;
+      showSnackbar("Impossible d'ouvrir le fichier JSON");
+    }).then(null, function () {
+      showSnackbar("Fichier JSON invalide");
+    });
+  }
+
+  function linkNewJson() {
+    if (!supportsFileSync) {
+      showSnackbar("Utilisez Chrome ou Edge sur PC pour la synchronisation fichier");
+      return;
+    }
+    window.showSaveFilePicker({
+      id: "urgences_json_sync",
+      suggestedName: "urgences_patients.json",
+      types: [{description: "Fichier JSON", accept: {"application/json": [".json"]}}]
+    }).then(function (handle) {
+      if (!handle) return;
+      linkedFileHandle = handle;
+      linkedFileName = handle.name || "urgences_patients.json";
+      storedFileHandle = handle;
+      persistHandleInIDB(handle);
+      updateFileSyncUI();
+      writeLinkedFile();
+      showSnackbar("Synchronisation active : " + linkedFileName);
+    }, function (err) {
+      if (err && err.name === "AbortError") return;
+      showSnackbar("Création du fichier JSON impossible");
+    });
+  }
+
+  function reconnectStoredJson() {
+    if (!storedFileHandle) return;
+    activateHandleForReadWrite(storedFileHandle).then(null, function () {
+      storedFileHandle = null;
+      persistHandleInIDB(null);
+      updateFileSyncUI();
+      showSnackbar("Fichier introuvable ou inaccessible");
+    });
+  }
+
+  function unlinkJson() {
+    linkedFileHandle = null;
+    linkedFileName = "";
+    storedFileHandle = null;
+    persistHandleInIDB(null);
+    updateFileSyncUI();
+    setSaveStatus("Enregistré", false);
+    showSnackbar("Synchronisation fichier désactivée");
+  }
+
+  function checkStoredHandleOnStartup() {
+    if (!supportsFileSync) return;
+    updateFileSyncUI();
+    readHandleFromIDB(function (handle) {
+      if (!handle) return;
+      storedFileHandle = handle;
+      if (handle.queryPermission) {
+        handle.queryPermission({mode: "readwrite"}).then(function (state) {
+          if (state === "granted") {
+            handle.getFile().then(function (file) {
+              return file.text();
+            }).then(function (text) {
+              applyLoadedJsonText(text);
+              linkedFileHandle = handle;
+              linkedFileName = handle.name || "urgences_patients.json";
+              updateFileSyncUI();
+              setSaveStatus("JSON synchro", false);
+            }, function () {
+              updateFileSyncUI();
+            });
+          } else {
+            updateFileSyncUI();
+          }
+        }, function () {
+          updateFileSyncUI();
+        });
+      } else {
+        updateFileSyncUI();
+      }
+    });
+  }
+
+  // ===== THÈMES =====
+  function applyTheme(themeId) {
+    var theme = THEMES[0];
+    for (var i = 0; i < THEMES.length; i++) {
+      if (THEMES[i].id === themeId) {
+        theme = THEMES[i];
+        break;
+      }
+    }
+    document.documentElement.setAttribute("data-theme", theme.id);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme.meta);
+    var iconEl = document.getElementById("themeIcon");
+    var labelEl = document.getElementById("themeLabel");
+    if (iconEl) iconEl.innerHTML = theme.icon;
+    if (labelEl) labelEl.textContent = theme.label;
+    try { localStorage.setItem(THEME_KEY, theme.id); } catch (e) {}
+  }
+
+  function cycleTheme() {
+    var current = document.documentElement.getAttribute("data-theme") || "light";
+    var idx = 0;
+    for (var i = 0; i < THEMES.length; i++) {
+      if (THEMES[i].id === current) { idx = i; break; }
+    }
+    applyTheme(THEMES[(idx + 1) % THEMES.length].id);
+  }
+
+  // ===== SNACKBAR =====
+  function hideSnackbar() {
+    clearTimeout(snackbarTimer);
+    var bar = document.getElementById("snackbar");
+    if (bar) bar.classList.remove("show");
+  }
+
+  function showSnackbar(message, options) {
+    var opts = options || {};
+    var duration = opts.duration || 2800;
+    var actionText = opts.actionText || null;
+    var onAction = opts.onAction || null;
+    var bar = document.getElementById("snackbar");
+    var msgEl = document.getElementById("snackbarMsg");
+    var actBtn = document.getElementById("snackbarAction");
+    var prog = document.getElementById("snackbarProgress");
+
+    clearTimeout(snackbarTimer);
+    msgEl.textContent = message;
+
+    if (actionText && onAction) {
+      actBtn.textContent = actionText;
+      actBtn.style.display = "inline-block";
+      actBtn.onclick = function () {
+        onAction();
+        hideSnackbar();
+      };
+    } else {
+      actBtn.style.display = "none";
+      actBtn.onclick = null;
+    }
+
+    prog.style.transition = "none";
+    prog.style.width = "100%";
+    bar.classList.add("show");
+    void prog.offsetWidth;
+    prog.style.transition = "width " + duration + "ms linear";
+    prog.style.width = "0%";
+
+    snackbarTimer = setTimeout(function () {
+      bar.classList.remove("show");
+      lastDeleted = null;
+    }, duration);
+  }
+
+  // ===== CONSTANTES =====
+  function createEmptyVitals() {
+    return {pa: "", fc: "", spo2: "", temp: "", fr: "", hgt: "", eva: ""};
+  }
+
+  function hasVitals(patient) {
+    if (!patient.vitals) return false;
+    for (var i = 0; i < VITAL_FIELDS.length; i++) {
+      var val = patient.vitals[VITAL_FIELDS[i].id];
+      if (val && String(val).trim().length > 0) return true;
+    }
+    return false;
+  }
+
+  function formatVitalsLine(patient) {
+    if (!patient.vitals) return "";
+    var parts = [];
+    for (var i = 0; i < VITAL_FIELDS.length; i++) {
+      var v = VITAL_FIELDS[i];
+      var val = (patient.vitals[v.id] || "").trim();
+      if (val) parts.push(v.label + " : " + val + v.suffix);
+    }
+    return parts.join(" | ");
+  }
+
+  function handleVitalUpdate(patient, vitalId, value, boxEl) {
+    if (!patient.vitals) patient.vitals = createEmptyVitals();
+    patient.vitals[vitalId] = value;
+    if (boxEl) boxEl.classList.toggle("filled", value.trim().length > 0);
+
+    var tabBtn = document.querySelector('.tab-btn[data-tab="examen"]');
+    if (tabBtn) {
+      var examText = (patient.data && patient.data.examen) ? patient.data.examen.trim() : "";
+      tabBtn.classList.toggle("has-content", hasVitals(patient) || examText.length > 0);
+    }
+    saveData();
+  }
+
+  function buildVitalsGrid(patient, compact) {
+    if (!patient.vitals) patient.vitals = createEmptyVitals();
+    var grid = document.createElement("div");
+    grid.className = "vitals-grid" + (compact ? " compact" : "");
+
+    for (var i = 0; i < VITAL_FIELDS.length; i++) {
+      (function (v, idx) {
+        var val = patient.vitals[v.id] || "";
+        var box = document.createElement("label");
+        box.className = "vital-box" + (val.trim() ? " filled" : "");
+
+        var head = document.createElement("div");
+        head.className = "vital-head";
+
+        var lbl = document.createElement("span");
+        lbl.className = "vital-label";
+        lbl.textContent = v.label;
+
+        var unit = document.createElement("span");
+        unit.className = "vital-unit";
+        unit.textContent = v.unit;
+
+        head.appendChild(lbl);
+        head.appendChild(unit);
+
+        var input = document.createElement("input");
+        input.type = "text";
+        input.className = "vital-input";
+        input.setAttribute("data-vital", v.id);
+        input.setAttribute("inputmode", v.mode);
+        input.placeholder = v.placeholder;
+        input.value = val;
+        input.setAttribute("aria-label", v.label + " (" + v.unit + ")");
+
+        input.addEventListener("input", function () {
+          handleVitalUpdate(patient, v.id, input.value, box);
+        });
+
+        if (!compact && idx === 0) {
+          input.addEventListener("keydown", function (e) {
+            if (e.key === "Tab" && e.shiftKey) {
+              e.preventDefault();
+              var examIdx = 0;
+              for (var k = 0; k < sections.length; k++) {
+                if (sections[k].id === "examen") { examIdx = k; break; }
+              }
+              var prevIdx = (examIdx - 1 + sections.length) % sections.length;
+              selectTab(sections[prevIdx].id, "end");
+            }
+          });
+        }
+
+        box.appendChild(head);
+        box.appendChild(input);
+        grid.appendChild(box);
+      })(VITAL_FIELDS[i], i);
+    }
+
+    return grid;
+  }
+
+  // ===== ALLERGIES =====
+  function getAllergyStatus(patient) {
+    var text = (patient.data && patient.data.allergies) ? String(patient.data.allergies).trim() : "";
+    if (patient.noAllergy) return {state: "none", text: ""};
+    if (text.length > 0) return {state: "allergy", text: text};
+    return {state: "unknown", text: ""};
+  }
+
+  function setNoAllergy(patient, checked) {
+    patient.noAllergy = !!checked;
+    if (patient.noAllergy) {
+      patient.data.allergies = "";
+    }
+    syncAllergyUI(patient);
+    saveData();
+  }
+
+  function syncAllergyUI(patient) {
+    var st = getAllergyStatus(patient);
+    var badge = document.getElementById("headerAllergyBadge");
+
+    if (badge) {
+      if (st.state === "allergy") {
+        badge.className = "badge badge-allergy";
+        badge.style.display = "inline-flex";
+        badge.textContent = "Allergie : " + st.text.split("\n")[0].slice(0, 32);
+      } else if (st.state === "none") {
+        badge.className = "badge badge-no-allergy";
+        badge.style.display = "inline-flex";
+        badge.textContent = "✓ Aucune allergie";
+      } else {
+        badge.style.display = "none";
+      }
+    }
+
+    var tabBtn = document.querySelector('.tab-btn[data-tab="allergies"]');
+    if (tabBtn) {
+      tabBtn.classList.toggle("has-content", st.state !== "unknown");
+      tabBtn.classList.toggle("allergy-alert", st.state === "allergy");
+      tabBtn.classList.toggle("allergy-none", st.state === "none");
+    }
+
+    if (activeTab === "allergies") {
+      var panel = document.querySelector(".tab-panel");
+      var chk = document.getElementById("noAllergyCheckbox");
+      var chkWrap = document.getElementById("noAllergyLabel");
+      var ta = document.querySelector(".tab-textarea");
+      if (panel) {
+        panel.classList.toggle("allergy-active", st.state === "allergy");
+        panel.classList.toggle("allergy-clear", st.state === "none");
+      }
+      if (chk) chk.checked = st.state === "none";
+      if (chkWrap) chkWrap.classList.toggle("checked", st.state === "none");
+      if (ta) {
+        if (st.state === "none" && ta.value !== "") ta.value = "";
+        ta.placeholder = st.state === "none"
+          ? "Aucune allergie connue — saisir ici pour en déclarer une..."
+          : "Saisir les allergies (médicaments, latex, alimentaires)...";
+      }
+    }
+
+    if (activeTab === OVERVIEW_TAB) {
+      var card = document.querySelector('.overview-card[data-section="allergies"]');
+      if (card) {
+        card.classList.toggle("allergy-active", st.state === "allergy");
+        card.classList.toggle("allergy-clear", st.state === "none");
+        var cChk = card.querySelector('input[type="checkbox"]');
+        var cLbl = card.querySelector(".no-allergy-check");
+        var cTa = card.querySelector("textarea");
+        if (cChk) cChk.checked = st.state === "none";
+        if (cLbl) cLbl.classList.toggle("checked", st.state === "none");
+        if (cTa) {
+          if (st.state === "none" && cTa.value !== "") cTa.value = "";
+          cTa.placeholder = st.state === "none" ? "Aucune allergie connue..." : "Rien de saisi...";
+        }
+      }
+    }
+
+    renderList();
+  }
+
+  // ===== TEMPS & STOCKAGE =====
+  function formatTime(ts) {
+    var d = new Date(ts || Date.now());
+    var hh = String(d.getHours());
+    var mm = String(d.getMinutes());
+    if (hh.length < 2) hh = "0" + hh;
+    if (mm.length < 2) mm = "0" + mm;
+    return hh + ":" + mm;
+  }
+
+  function normalizePatients(rawList) {
+    var result = [];
+    if (!Array.isArray(rawList)) return result;
+    for (var i = 0; i < rawList.length; i++) {
+      var p = rawList[i];
+      if (!p || typeof p !== "object") continue;
+      if (!p.id) p.id = String(Date.now() + i) + Math.random().toString(36).slice(2);
+      p.name = String(p.name || "Sans nom");
+      if (!p.data || typeof p.data !== "object") p.data = {};
+      if (!p.vitals || typeof p.vitals !== "object") p.vitals = createEmptyVitals();
+      if (typeof p.age === "undefined" || p.age === null) p.age = "";
+      if (typeof p.box === "undefined" || p.box === null) p.box = "";
+      if (typeof p.noAllergy !== "boolean") p.noAllergy = false;
+      if (SEVERITIES.indexOf(p.severity) === -1) p.severity = "white";
+      if (!p.trackers || typeof p.trackers !== "object") p.trackers = {bio: 0, ecg: 0, imagerie: 0, avis: 0};
+      if (typeof p.reason === "undefined" || p.reason === null) p.reason = p.data.motif || "";
+      if (!p.createdAt) {
+        var parsedTs = parseInt(String(p.id).slice(0, 13), 10);
+        p.createdAt = (parsedTs > 1500000000000 && parsedTs < 3000000000000) ? parsedTs : Date.now();
+      }
+      result.push(p);
+    }
+    return result;
+  }
+
+  function loadData() {
+    try {
+      var savedTheme = localStorage.getItem(THEME_KEY);
+      applyTheme(savedTheme || "light");
+    } catch (e) {
+      applyTheme("light");
+    }
+
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        var data = JSON.parse(saved);
+        patients = normalizePatients(data.patients);
+        activePatient = data.activePatient || null;
+      }
+    } catch (e) {
+      patients = [];
+      activePatient = null;
+    }
+
+    if (!findPatient(activePatient)) {
+      activePatient = patients.length ? patients[0].id : null;
+    }
+
+    updateSortUI();
+    renderList();
+    renderPatient();
+    checkStoredHandleOnStartup();
+  }
+
+  function saveData() {
+    clearTimeout(saveTimer);
+    setSaveStatus("Sauvegarde...", false);
+    saveTimer = setTimeout(function () {
+      var localOk = true;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({patients: patients, activePatient: activePatient}));
+      } catch (e) {
+        localOk = false;
+      }
+
+      if (linkedFileHandle) {
+        writeLinkedFile();
+      } else {
+        setSaveStatus(localOk ? "Enregistré" : "Stockage local bloqué", !localOk);
+      }
+    }, 250);
+  }
+
+  // ===== FILTRES & TRI =====
+  function setFilter(filter) {
+    currentFilter = filter;
+    var chips = document.querySelectorAll("#filterChips .chip");
+    for (var i = 0; i < chips.length; i++) {
+      chips[i].classList.toggle("active", chips[i].getAttribute("data-filter") === filter);
+    }
+    renderList();
+  }
+
+  function setSort(sortKey) {
+    if (currentSort === sortKey) {
+      sortDir = sortDir === "asc" ? "desc" : "asc";
+    } else {
+      currentSort = sortKey;
+      sortDir = sortKey === "arrival" ? "desc" : "asc";
+    }
+    updateSortUI();
+    renderList();
+  }
+
+  function updateSortUI() {
+    var labels = {arrival: "Arrivée", severity: "Gravité", box: "Box", name: "Nom"};
+    var btns = document.querySelectorAll("#sortBar .sort-btn");
+    for (var i = 0; i < btns.length; i++) {
+      var key = btns[i].getAttribute("data-sort");
+      var isActive = key === currentSort;
+      btns[i].classList.toggle("active", isActive);
+      var arrow = isActive ? (sortDir === "asc" ? " ↑" : " ↓") : "";
+      btns[i].textContent = labels[key] + arrow;
+    }
+  }
+
+  function hasPendingTracker(p) {
+    if (!p.trackers) return false;
+    for (var i = 0; i < TRACKERS.length; i++) {
+      if (p.trackers[TRACKERS[i].id] === 1) return true;
+    }
+    return false;
+  }
+
+  function getFilteredAndSortedPatients() {
+    var searchEl = document.getElementById("searchInput");
+    var query = searchEl ? searchEl.value.toLowerCase().trim() : "";
+
+    var filtered = [];
+    for (var i = 0; i < patients.length; i++) {
+      var p = patients[i];
+      if (currentFilter === "active" && p.archived) continue;
+      if (currentFilter === "archived" && !p.archived) continue;
+      if (currentFilter === "pending" && (!hasPendingTracker(p) || p.archived)) continue;
+      if (query) {
+        var motif = (p.data && p.data.motif) ? p.data.motif : "";
+        var haystack = ((p.box || "") + " " + p.name + " " + (p.age || "") + " " + (p.reason || "") + " " + motif).toLowerCase();
+        if (haystack.indexOf(query) === -1) continue;
+      }
+      filtered.push(p);
+    }
+
+    var mult = sortDir === "asc" ? 1 : -1;
+    filtered.sort(function (a, b) {
+      if (currentSort === "severity") {
+        var ra = typeof SEVERITY_RANK[a.severity] === "number" ? SEVERITY_RANK[a.severity] : 4;
+        var rb = typeof SEVERITY_RANK[b.severity] === "number" ? SEVERITY_RANK[b.severity] : 4;
+        if (ra !== rb) return (ra - rb) * mult;
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      }
+      if (currentSort === "box") {
+        var ba = String(a.box || "").trim();
+        var bb = String(b.box || "").trim();
+        if (!ba && !bb) return a.name.localeCompare(b.name, "fr");
+        if (!ba) return 1;
+        if (!bb) return -1;
+        return ba.localeCompare(bb, "fr", {numeric: true, sensitivity: "base"}) * mult;
+      }
+      if (currentSort === "name") {
+        return a.name.localeCompare(b.name, "fr", {sensitivity: "base"}) * mult;
+      }
+      return ((a.createdAt || 0) - (b.createdAt || 0)) * mult;
+    });
+
+    return filtered;
+  }
+
+  // ===== MODALES UNIVERSELLES =====
+  function selectModalSeverity(sev) {
+    selectedModalSeverity = sev;
+    var opts = document.querySelectorAll("#modalSeverityPicker .severity-option");
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].classList.toggle("selected", opts[i].getAttribute("data-sev") === sev);
+    }
+  }
+
+  function openPatientModal(patientId) {
+    editingPatientId = patientId || null;
+    var modal = document.getElementById("patientModal");
+    var title = document.getElementById("modalTitle");
+    var boxInput = document.getElementById("inputBox");
+    var nameInput = document.getElementById("inputName");
+    var ageInput = document.getElementById("inputAge");
+    var reasonInput = document.getElementById("inputReason");
+
+    if (editingPatientId) {
+      var p = findPatient(editingPatientId);
+      if (!p) return;
+      title.textContent = "Modifier le patient";
+      boxInput.value = p.box || "";
+      nameInput.value = p.name;
+      ageInput.value = p.age || "";
+      reasonInput.value = (p.data && p.data.motif) ? p.data.motif : (p.reason || "");
+      selectModalSeverity(p.severity || "white");
+    } else {
+      title.textContent = "Nouveau patient";
+      boxInput.value = "";
+      nameInput.value = "";
+      ageInput.value = "";
+      reasonInput.value = "";
+      selectModalSeverity("white");
+    }
+
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    setTimeout(function () { boxInput.focus(); }, 20);
+  }
+
+  function closePatientModal() {
+    var modal = document.getElementById("patientModal");
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  function openHelpModal() {
+    var modal = document.getElementById("helpModal");
+    var isOpen = modal.classList.contains("open");
+    if (isOpen) {
+      closeHelpModal();
+    } else {
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+  }
+
+  function closeHelpModal() {
+    var modal = document.getElementById("helpModal");
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  function handlePatientSubmit(e) {
+    e.preventDefault();
+    var box = document.getElementById("inputBox").value.trim();
+    var name = document.getElementById("inputName").value.trim();
+    var age = document.getElementById("inputAge").value.trim();
+    var motif = document.getElementById("inputReason").value.trim();
+    if (!name) return;
+
+    if (editingPatientId) {
+      var p = findPatient(editingPatientId);
+      if (p) {
+        p.box = box;
+        p.name = name;
+        p.age = age;
+        p.reason = motif;
+        p.data.motif = motif;
+        p.severity = selectedModalSeverity;
+      }
+    } else {
+      var now = Date.now();
+      var patient = {
+        id: String(now) + Math.random().toString(36).slice(2),
+        createdAt: now,
+        box: box,
+        name: name,
+        age: age,
+        reason: motif,
+        noAllergy: false,
+        severity: selectedModalSeverity,
+        trackers: {bio: 0, ecg: 0, imagerie: 0, avis: 0},
+        vitals: createEmptyVitals(),
+        archived: false,
+        data: {motif: motif}
+      };
+      patients.unshift(patient);
+      activePatient = patient.id;
+      activeTab = "motif";
+    }
+
+    closePatientModal();
+    saveData();
+    renderList();
+    renderPatient();
+    closeMenu();
+  }
+
+  // ===== ACTIONS PATIENT =====
+  function setPatientSeverity(patientId, sev) {
+    var p = findPatient(patientId);
+    if (!p) return;
+    p.severity = sev;
+    saveData();
+    renderList();
+    renderPatient();
+  }
+
+  function cycleTracker(patientId, trackerId) {
+    var p = findPatient(patientId);
+    if (!p) return;
+    if (!p.trackers) p.trackers = {bio: 0, ecg: 0, imagerie: 0, avis: 0};
+    p.trackers[trackerId] = ((p.trackers[trackerId] || 0) + 1) % 3;
+    saveData();
+    renderList();
+    renderPatient();
+  }
+
+  function deletePatient(id) {
+    var index = -1;
+    for (var i = 0; i < patients.length; i++) {
+      if (patients[i].id === id) { index = i; break; }
+    }
+    if (index === -1) return;
+
+    var removed = patients[index];
+    var prevActive = activePatient;
+
+    patients.splice(index, 1);
+    if (activePatient === id) {
+      var remaining = getFilteredAndSortedPatients();
+      activePatient = remaining.length ? remaining[0].id : (patients.length ? patients[0].id : null);
+    }
+
+    lastDeleted = {patient: removed, index: index, prevActive: prevActive};
+    saveData();
+    renderList();
+    renderPatient();
+
+    showSnackbar("Dossier de " + removed.name + " supprimé", {
+      duration: 7000,
+      actionText: "Annuler",
+      onAction: function () {
+        if (!lastDeleted) return;
+        patients.splice(Math.min(lastDeleted.index, patients.length), 0, lastDeleted.patient);
+        activePatient = lastDeleted.prevActive;
+        lastDeleted = null;
+        saveData();
+        renderList();
+        renderPatient();
+      }
+    });
+  }
+
+  function toggleArchive(id) {
+    var patient = findPatient(id);
+    if (!patient) return;
+    patient.archived = !patient.archived;
+    saveData();
+    renderList();
+    renderPatient();
+  }
+
+  function selectPatient(id) {
+    activePatient = id;
+    saveData();
+    renderList();
+    renderPatient();
+    centerActiveTab(false);
+    closeMenu();
+  }
+
+  // ===== CENTRAGE EXACT DE L'ONGLET ACTIF =====
+  function centerActiveTab(smooth) {
+    var tabsBar = document.querySelector(".tabs-bar");
+    if (!tabsBar) return;
+    var activeBtn = tabsBar.querySelector('.tab-btn[data-tab="' + activeTab + '"]');
+    if (!activeBtn) return;
+    var maxScroll = tabsBar.scrollWidth - tabsBar.clientWidth;
+    if (maxScroll <= 0) return;
+    var target = activeBtn.offsetLeft - (tabsBar.clientWidth - activeBtn.offsetWidth) / 2;
+    var clamped = Math.max(0, Math.min(target, maxScroll));
+    try {
+      tabsBar.scrollTo({left: clamped, behavior: smooth ? "smooth" : "auto"});
+    } catch (e) {
+      tabsBar.scrollLeft = clamped;
+    }
+  }
+
+  function selectTab(tabId, focusMode) {
+    activeTab = tabId;
+    var patient = findPatient(activePatient);
+    var host = document.getElementById("panelHost");
+
+    if (patient && host) {
+      var btns = document.querySelectorAll(".tabs-bar .tab-btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle("active", btns[i].getAttribute("data-tab") === tabId);
+      }
+      renderActiveTabPanel(patient, host);
+    } else {
+      renderPatient();
+    }
+
+    centerActiveTab(true);
+
+    if (focusMode) {
+      requestAnimationFrame(function () {
+        if (tabId === "examen" && (focusMode === true || focusMode === "start")) {
+          var firstVital = document.querySelector(".tab-panel .vital-input");
+          if (firstVital) {
+            firstVital.focus();
+            firstVital.select();
+            return;
+          }
+        }
+        var ta = document.querySelector(".tab-textarea");
+        if (ta) {
+          ta.focus();
+          ta.setSelectionRange(ta.value.length, ta.value.length);
+        }
+      });
+    }
+  }
+
+  // ===== RENDU LISTE LATÉRALE =====
+  function renderList() {
+    var list = document.getElementById("patientList");
+    var filtered = getFilteredAndSortedPatients();
+
+    if (!filtered.length) {
+      list.innerHTML = '<div style="padding:16px 12px;color:var(--md-on-surface-variant);font-size:13px">Aucun dossier correspondant.</div>';
+      return;
+    }
+
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < filtered.length; i++) {
+      (function (patient) {
+        var item = document.createElement("div");
+        item.className = "patient-item" + (patient.id === activePatient ? " active" : "");
+        item.setAttribute("data-id", patient.id);
+
+        var nameBtn = document.createElement("button");
+        nameBtn.type = "button";
+        nameBtn.className = "patient-name" + (patient.archived ? " archived" : "");
+        nameBtn.addEventListener("click", function () { selectPatient(patient.id); });
+
+        var details = document.createElement("div");
+        details.className = "patient-details";
+
+        var nameRow = document.createElement("div");
+        nameRow.className = "patient-name-row";
+
+        var sevDot = document.createElement("span");
+        sevDot.className = "severity-dot sev-" + (patient.severity || "white");
+        sevDot.title = SEVERITY_LABELS[patient.severity || "white"];
+        nameRow.appendChild(sevDot);
+
+        if (patient.box) {
+          var boxTag = document.createElement("span");
+          boxTag.className = "patient-box-tag";
+          boxTag.textContent = patient.box;
+          nameRow.appendChild(boxTag);
+        }
+
+        var patientName = document.createElement("span");
+        patientName.className = "patient-name-text";
+        patientName.textContent = patient.name;
+        nameRow.appendChild(patientName);
+
+        var allergySt = getAllergyStatus(patient);
+        if (allergySt.state === "allergy") {
+          var al = document.createElement("span");
+          al.className = "allergy-indicator";
+          al.title = "Allergie : " + allergySt.text;
+          nameRow.appendChild(al);
+        }
+
+        var meta = document.createElement("span");
+        meta.className = "patient-meta";
+        meta.setAttribute("data-role", "meta");
+        var timeText = formatTime(patient.createdAt);
+        var ageText = patient.age ? (patient.age + " ans") : "Âge N/R";
+        var motifVal = (patient.data && patient.data.motif) ? patient.data.motif : (patient.reason || "Motif non renseigné");
+        meta.textContent = timeText + " · " + ageText + " · " + String(motifVal).split("\n")[0];
+
+        details.appendChild(nameRow);
+        details.appendChild(meta);
+
+        var activeTrackers = [];
+        for (var tIdx = 0; tIdx < TRACKERS.length; tIdx++) {
+          var tr = TRACKERS[tIdx];
+          if (patient.trackers && patient.trackers[tr.id] > 0) activeTrackers.push(tr);
+        }
+
+        if (activeTrackers.length > 0) {
+          var trackerRow = document.createElement("div");
+          trackerRow.className = "sidebar-trackers";
+          for (var aIdx = 0; aIdx < activeTrackers.length; aIdx++) {
+            var act = activeTrackers[aIdx];
+            var st = patient.trackers[act.id];
+            var pill = document.createElement("span");
+            pill.className = "mini-tracker " + (st === 1 ? "pending" : "done");
+            pill.textContent = (st === 1 ? "● " : "✓ ") + act.short;
+            trackerRow.appendChild(pill);
+          }
+          details.appendChild(trackerRow);
+        }
+
+        nameBtn.appendChild(details);
+
+        var archive = document.createElement("button");
+        archive.type = "button";
+        archive.className = "icon-button";
+        archive.title = patient.archived ? "Réactiver le dossier" : "Marquer comme sorti";
+        archive.textContent = patient.archived ? "↶" : "✓";
+        archive.addEventListener("click", function () { toggleArchive(patient.id); });
+
+        var del = document.createElement("button");
+        del.type = "button";
+        del.className = "icon-button delete-button";
+        del.title = "Supprimer le patient";
+        del.textContent = "✕";
+        del.addEventListener("click", function () { deletePatient(patient.id); });
+
+        item.appendChild(nameBtn);
+        item.appendChild(archive);
+        item.appendChild(del);
+        fragment.appendChild(item);
+      })(filtered[i]);
+    }
+
+    setChildren(list, [fragment]);
+  }
+
+  // ===== COPIE (AVEC REPLI FILE://) & IMPRESSION =====
+  function copyTextToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        showSnackbar("Observation copiée dans le presse-papiers");
+      }, function () {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.top = "-9999px";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      document.execCommand("copy");
+      showSnackbar("Observation copiée dans le presse-papiers");
+    } catch (e) {
+      showSnackbar("Impossible de copier automatiquement");
+    }
+    document.body.removeChild(ta);
+  }
+
+  function copyActivePatient() {
+    var patient = findPatient(activePatient);
+    if (!patient) return;
+    var boxPrefix = patient.box ? ("[" + patient.box.toUpperCase() + "] ") : "";
+    var ageStr = patient.age ? (" (" + patient.age + " ans)") : "";
+    var lines = ["DOSSIER PATIENT : " + boxPrefix + patient.name.toUpperCase() + ageStr + " — Arrivée " + formatTime(patient.createdAt)];
+    lines.push("====================================================");
+
+    var trackerStates = [];
+    for (var t = 0; t < TRACKERS.length; t++) {
+      var tr = TRACKERS[t];
+      var s = patient.trackers ? (patient.trackers[tr.id] || 0) : 0;
+      if (s === 1) trackerStates.push(tr.label + ": En attente");
+      else if (s === 2) trackerStates.push(tr.label + ": Vu/Fait");
+    }
+    if (trackerStates.length) lines.push("Suivi : " + trackerStates.join(" | "));
+
+    var allergySt = getAllergyStatus(patient);
+    var vitalsLine = formatVitalsLine(patient);
+
+    for (var i = 0; i < sections.length; i++) {
+      var sec = sections[i];
+      if (sec.id === "allergies") {
+        if (allergySt.state === "allergy") lines.push("\n[ALLERGIES]\n" + allergySt.text);
+        else if (allergySt.state === "none") lines.push("\n[ALLERGIES]\nAucune allergie connue");
+        continue;
+      }
+      if (sec.id === "examen") {
+        var examVal = (patient.data && patient.data.examen) ? patient.data.examen.trim() : "";
+        if (vitalsLine || examVal) {
+          var block = [];
+          if (vitalsLine) block.push("Constantes : " + vitalsLine);
+          if (examVal) block.push(examVal);
+          lines.push("\n[EXAMEN CLINIQUE]\n" + block.join("\n"));
+        }
+        continue;
+      }
+      var val = (patient.data && patient.data[sec.id]) ? patient.data[sec.id].trim() : "";
+      if (val) lines.push("\n[" + sec.title.toUpperCase() + "]\n" + val);
+    }
+
+    copyTextToClipboard(lines.join("\n"));
+  }
+
+  function buildPrintPatientNode(patient) {
+    var card = document.createElement("article");
+    card.className = "print-patient";
+
+    var head = document.createElement("div");
+    head.className = "print-patient-head";
+
+    var title = document.createElement("div");
+    title.className = "print-patient-title";
+    var boxTxt = patient.box ? ("[" + patient.box + "] ") : "";
+    var ageTxt = patient.age ? (" — " + patient.age + " ans") : "";
+    title.textContent = boxTxt + patient.name + ageTxt;
+
+    var meta = document.createElement("div");
+    meta.className = "print-patient-meta";
+    var sevTxt = SEVERITY_LABELS[patient.severity || "white"].split(" ")[0];
+    var statusTxt = patient.archived ? "Sorti" : "Présent";
+    meta.textContent = "Tri : " + sevTxt + " · Arrivée : " + formatTime(patient.createdAt) + " · Statut : " + statusTxt;
+
+    head.appendChild(title);
+    head.appendChild(meta);
+    card.appendChild(head);
+
+    var trackerList = [];
+    for (var t = 0; t < TRACKERS.length; t++) {
+      var trItem = TRACKERS[t];
+      var st = patient.trackers ? (patient.trackers[trItem.id] || 0) : 0;
+      if (st === 1) trackerList.push(trItem.label + " : En attente");
+      else if (st === 2) trackerList.push(trItem.label + " : Vu / Fait");
+    }
+
+    if (trackerList.length) {
+      var trEl = document.createElement("div");
+      trEl.className = "print-trackers";
+      trEl.textContent = "Suivi paraclinique : " + trackerList.join("   |   ");
+      card.appendChild(trEl);
+    }
+
+    var hasAnyContent = false;
+    var allergySt = getAllergyStatus(patient);
+    var vitalsLine = formatVitalsLine(patient);
+
+    for (var i = 0; i < sections.length; i++) {
+      var s = sections[i];
+      if (s.id === "examen") {
+        var examVal = (patient.data && patient.data.examen) ? patient.data.examen.trim() : "";
+        if (!vitalsLine && !examVal) continue;
+        hasAnyContent = true;
+
+        var exEl = document.createElement("div");
+        exEl.className = "print-section";
+        var exTitle = document.createElement("div");
+        exTitle.className = "print-section-title";
+        exTitle.textContent = s.title;
+        exEl.appendChild(exTitle);
+
+        if (vitalsLine) {
+          var vitEl = document.createElement("div");
+          vitEl.className = "print-vitals";
+          vitEl.textContent = "Constantes : " + vitalsLine;
+          exEl.appendChild(vitEl);
+        }
+        if (examVal) {
+          var exBody = document.createElement("div");
+          exBody.className = "print-section-body";
+          exBody.textContent = examVal;
+          exEl.appendChild(exBody);
+        }
+        card.appendChild(exEl);
+        continue;
+      }
+
+      var val = "";
+      var isAllergyAlertBox = false;
+      if (s.id === "allergies") {
+        if (allergySt.state === "allergy") {
+          val = allergySt.text;
+          isAllergyAlertBox = true;
+        } else if (allergySt.state === "none") {
+          val = "Aucune allergie connue";
+        }
+      } else {
+        val = (patient.data && patient.data[s.id]) ? patient.data[s.id].trim() : "";
+      }
+      if (!val) continue;
+      hasAnyContent = true;
+
+      var secEl = document.createElement("div");
+      secEl.className = isAllergyAlertBox ? "print-section print-allergy-box" : "print-section";
+
+      var stTitle = document.createElement("div");
+      stTitle.className = "print-section-title";
+      stTitle.textContent = s.title;
+
+      var stBody = document.createElement("div");
+      stBody.className = "print-section-body";
+      stBody.textContent = val;
+
+      secEl.appendChild(stTitle);
+      secEl.appendChild(stBody);
+      card.appendChild(secEl);
+    }
+
+    if (!hasAnyContent) {
+      var empty = document.createElement("div");
+      empty.className = "print-patient-meta";
+      empty.textContent = "Aucune note clinique enregistrée.";
+      card.appendChild(empty);
+    }
+
+    return card;
+  }
+
+  function triggerPrint(patientList, docTitle) {
+    if (!patientList.length) {
+      showSnackbar("Aucun dossier à imprimer");
+      return;
+    }
+    var area = document.getElementById("printArea");
+    var nodes = [];
+
+    var header = document.createElement("div");
+    header.className = "print-doc-header";
+    var h1 = document.createElement("h1");
+    h1.textContent = docTitle;
+    var stamp = document.createElement("span");
+    stamp.textContent = "Imprimé le " + new Date().toLocaleDateString("fr-FR") + " à " + formatTime(Date.now());
+    header.appendChild(h1);
+    header.appendChild(stamp);
+    nodes.push(header);
+
+    for (var i = 0; i < patientList.length; i++) {
+      nodes.push(buildPrintPatientNode(patientList[i]));
+    }
+    setChildren(area, nodes);
+    window.print();
+  }
+
+  function printActivePatient() {
+    var patient = findPatient(activePatient);
+    if (!patient) return;
+    triggerPrint([patient], "Dossier patient — " + patient.name);
+  }
+
+  function printAllPatients() {
+    var list = getFilteredAndSortedPatients();
+    triggerPrint(list, "Relève Urgences (" + list.length + " dossier" + (list.length > 1 ? "s" : "") + ")");
+  }
+
+  function editActivePatient() {
+    if (activePatient) openPatientModal(activePatient);
+  }
+
+  // ===== MISE À JOUR DES CHAMPS =====
+  function handleFieldUpdate(patient, sectionId, value) {
+    patient.data[sectionId] = value;
+    var nonEmpty = value.trim().length > 0;
+
+    if (sectionId === "allergies") {
+      if (nonEmpty && patient.noAllergy) {
+        patient.noAllergy = false;
+      }
+      syncAllergyUI(patient);
+      saveData();
+      return;
+    }
+
+    var tabBtn = document.querySelector('.tab-btn[data-tab="' + sectionId + '"]');
+    if (tabBtn) {
+      var filled = sectionId === "examen" ? (nonEmpty || hasVitals(patient)) : nonEmpty;
+      tabBtn.classList.toggle("has-content", filled);
+    }
+
+    if (sectionId === "motif") {
+      patient.reason = value;
+      var activeItemMeta = document.querySelector('.patient-item[data-id="' + patient.id + '"] [data-role="meta"]');
+      if (activeItemMeta) {
+        var timeText = formatTime(patient.createdAt);
+        var ageText = patient.age ? (patient.age + " ans") : "Âge N/R";
+        var motifText = (value || "Motif non renseigné").split("\n")[0];
+        activeItemMeta.textContent = timeText + " · " + ageText + " · " + motifText;
+      }
+    }
+
+    saveData();
+  }
+
+  // ===== RENDU PANNEAU D'ONGLET ACTIF =====
+  function renderActiveTabPanel(patient, host) {
+    if (activeTab === OVERVIEW_TAB) {
+      var grid = document.createElement("div");
+      grid.className = "overview-grid";
+
+      for (var i = 0; i < sections.length; i++) {
+        (function (s) {
+          var val = (patient.data && patient.data[s.id]) ? patient.data[s.id] : "";
+          var isAllergy = s.id === "allergies";
+          var isExamen = s.id === "examen";
+          var allergySt = isAllergy ? getAllergyStatus(patient) : null;
+
+          var card = document.createElement("div");
+          card.className = "overview-card" +
+            (isAllergy && allergySt.state === "allergy" ? " allergy-active" : "") +
+            (isAllergy && allergySt.state === "none" ? " allergy-clear" : "");
+          card.setAttribute("data-section", s.id);
+
+          var head = document.createElement("div");
+          head.className = "overview-card-head";
+
+          var cTitle = document.createElement("span");
+          cTitle.className = "overview-card-title";
+          cTitle.textContent = s.title;
+
+          var cardActions = document.createElement("div");
+          cardActions.className = "overview-card-actions";
+
+          if (isAllergy) {
+            var lbl = document.createElement("label");
+            lbl.className = "no-allergy-check compact" + (allergySt.state === "none" ? " checked" : "");
+            var chk = document.createElement("input");
+            chk.type = "checkbox";
+            chk.checked = allergySt.state === "none";
+            chk.addEventListener("change", function () { setNoAllergy(patient, chk.checked); });
+            lbl.appendChild(chk);
+            lbl.appendChild(document.createTextNode("Aucune allergie"));
+            cardActions.appendChild(lbl);
+          }
+
+          var openBtn = document.createElement("button");
+          openBtn.type = "button";
+          openBtn.className = "overview-open-btn";
+          openBtn.tabIndex = -1;
+          openBtn.textContent = "Agrandir";
+          openBtn.addEventListener("click", function () { selectTab(s.id, "start"); });
+
+          cardActions.appendChild(openBtn);
+          head.appendChild(cTitle);
+          head.appendChild(cardActions);
+          card.appendChild(head);
+
+          if (isExamen) {
+            card.appendChild(buildVitalsGrid(patient, true));
+          }
+
+          var ta = document.createElement("textarea");
+          ta.className = "overview-textarea";
+          ta.placeholder = isAllergy && allergySt.state === "none" ? "Aucune allergie connue..." : "Rien de saisi...";
+          ta.value = val;
+          ta.addEventListener("input", function () { handleFieldUpdate(patient, s.id, ta.value); });
+
+          card.appendChild(ta);
+          grid.appendChild(card);
+        })(sections[i]);
+      }
+
+      setChildren(host, [grid]);
+      return;
+    }
+
+    var sec = findSection(activeTab);
+    var currentVal = (patient.data && patient.data[sec.id]) ? patient.data[sec.id] : "";
+    var isAllergy = sec.id === "allergies";
+    var isExamen = sec.id === "examen";
+    var allergySt = isAllergy ? getAllergyStatus(patient) : null;
+
+    var panel = document.createElement("section");
+    panel.className = "tab-panel" +
+      (isAllergy && allergySt.state === "allergy" ? " allergy-active" : "") +
+      (isAllergy && allergySt.state === "none" ? " allergy-clear" : "");
+
+    var pHead = document.createElement("div");
+    pHead.className = "panel-header";
+
+    var pTitle = document.createElement("div");
+    pTitle.className = "panel-title";
+    pTitle.textContent = sec.title;
+
+    var pTools = document.createElement("div");
+    pTools.className = "panel-tools";
+
+    if (isAllergy) {
+      var lbl = document.createElement("label");
+      lbl.id = "noAllergyLabel";
+      lbl.className = "no-allergy-check" + (allergySt.state === "none" ? " checked" : "");
+      var chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.id = "noAllergyCheckbox";
+      chk.checked = allergySt.state === "none";
+      chk.addEventListener("change", function () { setNoAllergy(patient, chk.checked); });
+      lbl.appendChild(chk);
+      lbl.appendChild(document.createTextNode("Aucune allergie"));
+      pTools.appendChild(lbl);
+    }
+
+    var pHint = document.createElement("span");
+    pHint.className = "panel-hint";
+    pHint.textContent = "Tab / Shift+Tab : rubrique suivante/précédente";
+
+    pTools.appendChild(pHint);
+    pHead.appendChild(pTitle);
+    pHead.appendChild(pTools);
+    panel.appendChild(pHead);
+
+    if (isExamen) {
+      panel.appendChild(buildVitalsGrid(patient, false));
+    }
+
+    var textarea = document.createElement("textarea");
+    textarea.className = "tab-textarea";
+    textarea.placeholder = isAllergy
+      ? (allergySt.state === "none"
+          ? "Aucune allergie connue — saisir ici pour en déclarer une..."
+          : "Saisir les allergies (médicaments, latex, alimentaires)...")
+      : isExamen
+        ? "Saisir l'examen clinique (cardio-pulmonaire, abdominal, neuro, cutané...)..."
+        : "Saisir : " + sec.title.toLowerCase() + "...";
+    textarea.value = currentVal;
+    textarea.setAttribute("aria-label", sec.title);
+
+    textarea.addEventListener("input", function () {
+      handleFieldUpdate(patient, sec.id, textarea.value);
+    });
+
+    textarea.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") {
+        if (isExamen && e.shiftKey) {
+          e.preventDefault();
+          var vitals = panel.querySelectorAll(".vital-input");
+          var lastVital = vitals[vitals.length - 1];
+          if (lastVital) {
+            lastVital.focus();
+            lastVital.select();
+          }
+          return;
+        }
+        e.preventDefault();
+        var secIdx = 0;
+        for (var k = 0; k < sections.length; k++) {
+          if (sections[k].id === sec.id) { secIdx = k; break; }
+        }
+        var nextIdx = e.shiftKey
+          ? (secIdx - 1 + sections.length) % sections.length
+          : (secIdx + 1) % sections.length;
+        selectTab(sections[nextIdx].id, e.shiftKey ? "end" : "start");
+      }
+    });
+
+    panel.appendChild(textarea);
+    setChildren(host, [panel]);
+  }
+
+  // ===== RENDU COMPLET DU DOSSIER =====
+  function renderPatient() {
+    var content = document.getElementById("content");
+    var topbarActions = document.getElementById("topbarActions");
+    var patient = findPatient(activePatient);
+    var prevTabsBar = document.querySelector(".tabs-bar");
+    var prevTabsScroll = prevTabsBar ? prevTabsBar.scrollLeft : null;
+
+    if (!patient) {
+      document.getElementById("topbarTitle").textContent = "Dossier patient";
+      topbarActions.style.display = "none";
+
+      var emptyBox = document.createElement("div");
+      emptyBox.className = "empty-state";
+      var h2 = document.createElement("h2");
+      h2.textContent = "Aucun dossier sélectionné";
+      var p = document.createElement("p");
+      p.innerHTML = "Sélectionnez un patient dans le menu latéral, ouvrez un fichier JSON ou créez un nouveau dossier (<kbd>Alt+N</kbd>).";
+
+      var actions = document.createElement("div");
+      actions.className = "empty-actions";
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn-filled";
+      btn.textContent = "+ Créer un dossier";
+      btn.addEventListener("click", function () { openPatientModal(null); });
+      actions.appendChild(btn);
+
+      if (supportsFileSync && !linkedFileHandle) {
+        var btnOpen = document.createElement("button");
+        btnOpen.type = "button";
+        btnOpen.className = "btn-outline-lg";
+        btnOpen.textContent = "Ouvrir fichier JSON";
+        btnOpen.addEventListener("click", linkExistingJson);
+        actions.appendChild(btnOpen);
+      }
+
+      emptyBox.appendChild(h2);
+      emptyBox.appendChild(p);
+      emptyBox.appendChild(actions);
+      setChildren(content, [emptyBox]);
+      return;
+    }
+
+    document.getElementById("topbarTitle").textContent = "Urgences";
+    topbarActions.style.display = "flex";
+
+    var workspace = document.createElement("div");
+    workspace.className = "workspace";
+
+    // 1. En-tête patient
+    var header = document.createElement("div");
+    header.className = "patient-header";
+
+    var titleRow = document.createElement("div");
+    titleRow.className = "patient-title-row";
+
+    var headerDot = document.createElement("button");
+    headerDot.type = "button";
+    headerDot.className = "severity-dot lg sev-" + (patient.severity || "white");
+    headerDot.title = "Changer la gravité : " + SEVERITY_LABELS[patient.severity || "white"];
+
+    var popover = document.createElement("div");
+    popover.className = "severity-popover";
+    for (var sIdx = 0; sIdx < SEVERITIES.length; sIdx++) {
+      (function (sev) {
+        var opt = document.createElement("button");
+        opt.type = "button";
+        opt.className = "severity-dot lg sev-" + sev;
+        opt.title = SEVERITY_LABELS[sev];
+        opt.addEventListener("click", function (e) {
+          e.stopPropagation();
+          setPatientSeverity(patient.id, sev);
+        });
+        popover.appendChild(opt);
+      })(SEVERITIES[sIdx]);
+    }
+
+    headerDot.addEventListener("click", function (e) {
+      e.stopPropagation();
+      popover.classList.toggle("open");
+    });
+
+    titleRow.appendChild(headerDot);
+    titleRow.appendChild(popover);
+
+    var title = document.createElement("h2");
+    title.textContent = patient.name;
+    titleRow.appendChild(title);
+
+    if (patient.box) {
+      var boxBadge = document.createElement("span");
+      boxBadge.className = "badge badge-box";
+      boxBadge.textContent = patient.box;
+      titleRow.appendChild(boxBadge);
+    }
+
+    if (patient.age) {
+      var ageBadge = document.createElement("span");
+      ageBadge.className = "badge badge-age";
+      ageBadge.textContent = patient.age + " ans";
+      titleRow.appendChild(ageBadge);
+    }
+
+    var timeBadge = document.createElement("span");
+    timeBadge.className = "badge badge-time";
+    timeBadge.textContent = formatTime(patient.createdAt);
+    timeBadge.title = "Heure d'arrivée";
+    titleRow.appendChild(timeBadge);
+
+    if (patient.archived) {
+      var archBadge = document.createElement("span");
+      archBadge.className = "badge badge-archived";
+      archBadge.textContent = "Sorti";
+      titleRow.appendChild(archBadge);
+    }
+
+    var allergySt = getAllergyStatus(patient);
+    var allergyBadge = document.createElement("button");
+    allergyBadge.type = "button";
+    allergyBadge.id = "headerAllergyBadge";
+    if (allergySt.state === "allergy") {
+      allergyBadge.className = "badge badge-allergy";
+      allergyBadge.style.display = "inline-flex";
+      allergyBadge.textContent = "Allergie : " + allergySt.text.split("\n")[0].slice(0, 32);
+    } else if (allergySt.state === "none") {
+      allergyBadge.className = "badge badge-no-allergy";
+      allergyBadge.style.display = "inline-flex";
+      allergyBadge.textContent = "✓ Aucune allergie";
+    } else {
+      allergyBadge.className = "badge badge-allergy";
+      allergyBadge.style.display = "none";
+    }
+    allergyBadge.addEventListener("click", function () { selectTab("allergies", false); });
+    titleRow.appendChild(allergyBadge);
+
+    var trackerGrid = document.createElement("div");
+    trackerGrid.className = "tracker-grid";
+    for (var tIdx = 0; tIdx < TRACKERS.length; tIdx++) {
+      (function (t) {
+        var state = patient.trackers ? (patient.trackers[t.id] || 0) : 0;
+        var chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "tracker-chip state-" + state;
+        var symbol = state === 1 ? "●" : (state === 2 ? "✓" : "○");
+        chip.innerHTML = '<span>' + symbol + '</span><span class="lbl-full">' + t.label + '</span><span class="lbl-short">' + t.short + '</span>';
+        chip.title = t.label + " : " + (state === 1 ? "En attente" : (state === 2 ? "Vu / Fait" : "Non demandé"));
+        chip.addEventListener("click", function () { cycleTracker(patient.id, t.id); });
+        trackerGrid.appendChild(chip);
+      })(TRACKERS[tIdx]);
+    }
+
+    header.appendChild(titleRow);
+    header.appendChild(trackerGrid);
+
+    // 2. Barre d'onglets (défilable à la molette et au touchpad en fenêtre étroite)
+    var tabsBar = document.createElement("nav");
+    tabsBar.className = "tabs-bar";
+    tabsBar.setAttribute("aria-label", "Rubriques du dossier");
+
+    tabsBar.addEventListener("wheel", function (e) {
+      if (tabsBar.scrollWidth <= tabsBar.clientWidth) return;
+      var dy = e.deltaY || 0;
+      var dx = e.deltaX || 0;
+      if (e.deltaMode === 1) {
+        dy *= 24;
+        dx *= 24;
+      } else if (e.deltaMode === 2) {
+        dy *= tabsBar.clientWidth;
+        dx *= tabsBar.clientWidth;
+      }
+      if (Math.abs(dy) > Math.abs(dx) && dy !== 0) {
+        e.preventDefault();
+        tabsBar.scrollLeft += dy;
+      }
+    }, {passive: false});
+
+    for (var i = 0; i < sections.length; i++) {
+      (function (s) {
+        var isAllergy = s.id === "allergies";
+        var isExamen = s.id === "examen";
+        var val = (patient.data && patient.data[s.id]) ? patient.data[s.id].trim() : "";
+        var btn = document.createElement("button");
+        btn.type = "button";
+
+        var cls = "tab-btn" + (activeTab === s.id ? " active" : "");
+        if (isAllergy) {
+          if (allergySt.state === "allergy") cls += " has-content allergy-alert";
+          else if (allergySt.state === "none") cls += " has-content allergy-none";
+        } else if (isExamen) {
+          if (val || hasVitals(patient)) cls += " has-content";
+        } else if (val) {
+          cls += " has-content";
+        }
+
+        btn.className = cls;
+        btn.setAttribute("data-tab", s.id);
+        btn.innerHTML = '<span>' + s.short + '</span><span class="tab-dot"></span>';
+        btn.addEventListener("click", function () { selectTab(s.id, false); });
+        tabsBar.appendChild(btn);
+      })(sections[i]);
+    }
+
+    var overviewBtn = document.createElement("button");
+    overviewBtn.type = "button";
+    overviewBtn.className = "tab-btn overview-tab" + (activeTab === OVERVIEW_TAB ? " active" : "");
+    overviewBtn.setAttribute("data-tab", OVERVIEW_TAB);
+    overviewBtn.textContent = "Vue globale";
+    overviewBtn.title = "Afficher toutes les rubriques (Alt + V)";
+    overviewBtn.addEventListener("click", function () { selectTab(OVERVIEW_TAB, false); });
+    tabsBar.appendChild(overviewBtn);
+
+    // 3. Panneau actif
+    var panelHost = document.createElement("div");
+    panelHost.className = "panel-host";
+    panelHost.id = "panelHost";
+    renderActiveTabPanel(patient, panelHost);
+
+    workspace.appendChild(header);
+    workspace.appendChild(tabsBar);
+    workspace.appendChild(panelHost);
+    setChildren(content, [workspace]);
+
+    if (prevTabsScroll !== null) {
+      tabsBar.scrollLeft = prevTabsScroll;
+    }
+  }
+
+  // ===== EXPORT / IMPORT MANUELS =====
+  function exportBackup() {
+    var dataStr = JSON.stringify({patients: patients, activePatient: activePatient}, null, 2);
+    var blob = new Blob([dataStr], {type: "application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "urgences_patients_" + new Date().toISOString().slice(0, 10) + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showSnackbar("Sauvegarde JSON téléchargée");
+  }
+
+  function importBackup(event) {
+    var file = event.target.files && event.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        applyLoadedJsonText(e.target.result);
+        if (linkedFileHandle) writeLinkedFile();
+        showSnackbar("Dossiers importés avec succès");
+      } catch (err) {
+        showSnackbar("Erreur : fichier JSON invalide");
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = "";
+  }
+
+  function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("overlay").classList.toggle("visible");
+  }
+
+  function closeMenu() {
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("overlay").classList.remove("visible");
+  }
+
+  // ===== LIAISON DES ÉVÉNEMENTS STATIQUES =====
+  function bindEvents() {
+    document.getElementById("btnNewPatient").addEventListener("click", function () { openPatientModal(null); });
+    document.getElementById("searchInput").addEventListener("input", renderList);
+
+    var filterBtns = document.querySelectorAll("#filterChips .chip");
+    for (var i = 0; i < filterBtns.length; i++) {
+      (function (btn) {
+        btn.addEventListener("click", function () { setFilter(btn.getAttribute("data-filter")); });
+      })(filterBtns[i]);
+    }
+
+    var sortBtns = document.querySelectorAll("#sortBar .sort-btn");
+    for (var j = 0; j < sortBtns.length; j++) {
+      (function (btn) {
+        btn.addEventListener("click", function () { setSort(btn.getAttribute("data-sort")); });
+      })(sortBtns[j]);
+    }
+
+    document.getElementById("btnLinkOpen").addEventListener("click", linkExistingJson);
+    document.getElementById("btnLinkCreate").addEventListener("click", linkNewJson);
+    document.getElementById("btnReconnectJson").addEventListener("click", reconnectStoredJson);
+    document.getElementById("btnUnlinkJson").addEventListener("click", unlinkJson);
+
+    document.getElementById("themeToggleBtn").addEventListener("click", cycleTheme);
+    document.getElementById("btnPrintAll").addEventListener("click", printAllPatients);
+    document.getElementById("btnHelp").addEventListener("click", openHelpModal);
+    document.getElementById("btnExport").addEventListener("click", exportBackup);
+    document.getElementById("btnImport").addEventListener("click", function () {
+      document.getElementById("importFile").click();
+    });
+    document.getElementById("importFile").addEventListener("change", importBackup);
+
+    document.getElementById("overlay").addEventListener("click", closeMenu);
+    document.getElementById("btnMenu").addEventListener("click", toggleMenu);
+    document.getElementById("btnPrintActive").addEventListener("click", printActivePatient);
+    document.getElementById("btnCopyActive").addEventListener("click", copyActivePatient);
+    document.getElementById("btnEditActive").addEventListener("click", editActivePatient);
+
+    document.getElementById("patientForm").addEventListener("submit", handlePatientSubmit);
+    document.getElementById("btnCancelPatient").addEventListener("click", closePatientModal);
+    document.getElementById("patientModal").addEventListener("click", function (e) {
+      if (e.target === this) closePatientModal();
+    });
+
+    var sevOpts = document.querySelectorAll("#modalSeverityPicker .severity-option");
+    for (var k = 0; k < sevOpts.length; k++) {
+      (function (opt) {
+        opt.addEventListener("click", function () {
+          selectModalSeverity(opt.getAttribute("data-sev"));
+        });
+      })(sevOpts[k]);
+    }
+
+    document.getElementById("btnCloseHelp").addEventListener("click", closeHelpModal);
+    document.getElementById("helpModal").addEventListener("click", function (e) {
+      if (e.target === this) closeHelpModal();
+    });
+
+    // Swipe horizontal mobile
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchIgnored = false;
+    var contentEl = document.getElementById("content");
+
+    contentEl.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) return;
+      touchIgnored = !!(e.target && e.target.closest && e.target.closest(".tabs-bar"));
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, {passive: true});
+
+    contentEl.addEventListener("touchend", function (e) {
+      if (touchIgnored || !activePatient || e.changedTouches.length !== 1) return;
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 58 && Math.abs(dx) > Math.abs(dy) * 1.45) {
+        var tabIds = sections.map(function (s) { return s.id; }).concat([OVERVIEW_TAB]);
+        var idx = tabIds.indexOf(activeTab);
+        var nextIdx = dx < 0
+          ? (idx + 1) % tabIds.length
+          : (idx - 1 + tabIds.length) % tabIds.length;
+        selectTab(tabIds[nextIdx], false);
+      }
+    }, {passive: true});
+
+    // Fermeture popover pastilles au clic extérieur
+    document.addEventListener("click", function () {
+      var pops = document.querySelectorAll(".severity-popover.open");
+      for (var p = 0; p < pops.length; p++) pops[p].classList.remove("open");
+    });
+
+    // Raccourcis clavier + Échap
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closePatientModal();
+        closeHelpModal();
+        return;
+      }
+      if (!e.altKey) return;
+      var key = (e.key || "").toLowerCase();
+
+      if (key === "n") {
+        e.preventDefault();
+        openPatientModal(null);
+      } else if (key === "f" || key === "k") {
+        e.preventDefault();
+        var sInput = document.getElementById("searchInput");
+        if (sInput) sInput.focus();
+      } else if (key === "e") {
+        e.preventDefault();
+        editActivePatient();
+      } else if (key === "c") {
+        e.preventDefault();
+        copyActivePatient();
+      } else if (key === "p") {
+        e.preventDefault();
+        printActivePatient();
+      } else if (key === "i") {
+        e.preventDefault();
+        if (activePatient) selectTab("examen", "start");
+      } else if (key === "v") {
+        e.preventDefault();
+        if (activePatient) selectTab(activeTab === OVERVIEW_TAB ? "motif" : OVERVIEW_TAB, false);
+      } else if (key === "h") {
+        e.preventDefault();
+        openHelpModal();
+      } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        if (!activePatient) return;
+        e.preventDefault();
+        var tabIds = sections.map(function (s) { return s.id; }).concat([OVERVIEW_TAB]);
+        var idx = tabIds.indexOf(activeTab);
+        var nextIdx = e.key === "ArrowRight"
+          ? (idx + 1) % tabIds.length
+          : (idx - 1 + tabIds.length) % tabIds.length;
+        selectTab(tabIds[nextIdx], "start");
+      } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        var list = getFilteredAndSortedPatients();
+        if (!list.length) return;
+        var pIdx = -1;
+        for (var m = 0; m < list.length; m++) {
+          if (list[m].id === activePatient) { pIdx = m; break; }
+        }
+        var nextPIdx = e.key === "ArrowDown"
+          ? (pIdx + 1) % list.length
+          : (pIdx - 1 + list.length) % list.length;
+        selectPatient(list[nextPIdx].id);
+      }
+    });
+  }
+
+  function init() {
+    try {
+      bindEvents();
+      loadData();
+    } catch (err) {
+      setSaveStatus("Erreur init : " + err.message, true);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
